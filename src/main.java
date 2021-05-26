@@ -3,7 +3,7 @@ public class main {
 
 	public static void main(String[] args) {
 		
-		Vacunatorio vacunatorio = new Vacunatorio();
+		Vacunatorio vacunatorio = new Vacunatorio("UNGS", 200);
 		
 		Pfizer pfizer = new Pfizer(100);
 		

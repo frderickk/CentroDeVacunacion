@@ -5,13 +5,15 @@ public class Vacunatorio {
 	
 	private int capacidad;
 	private HashMap<Integer, Persona> inscriptos;
+	private String nombre;
 //	private HashMap<Integer, Persona> turno;
 //	private HashMap<Integer, Persona> listaespera;
 //  private HashMap<Integer, Persona> vacunados;
 
-	public Vacunatorio() {
-		this.capacidad = 200;
+	public Vacunatorio(String n, int capa) {
+		this.capacidad = capa;
 		inscriptos = new HashMap<Integer, Persona>();
+		this.nombre = n;
 //		vacunaAsignada = new HashMap<Integer, Vacunas>();
 	}
 
