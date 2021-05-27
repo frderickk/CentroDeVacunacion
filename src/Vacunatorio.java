@@ -9,6 +9,10 @@ public class Vacunatorio {
 //	private HashMap<Integer, Persona> turno;
 //	private HashMap<Integer, Persona> listaespera;
 //  private HashMap<Integer, Persona> vacunados;
+	
+	private int vacPfizerVen;
+	private int vacModernaVen;
+	
 
 	public Vacunatorio(String n, int capa) {
 		this.capacidad = capa;
@@ -81,6 +85,29 @@ public class Vacunatorio {
 	void listaEspera() {
 		
 	}
+	
+	//si se presenta, se cambia el boolean a vacunado
+	void vacunado() {	
+		//leer lista "turno"
+		//verificar que se haya presentado
+		//Si se presentó,cambiar el boolean a vacunado
+		//Sino, lo sacamos del sistema y se devuelve la vacuna al stock
+	}
+	
+	void ingresarVacuna(fech fechaDeIngreso, int cant, String nombre) {
+		
+	}
+	
+	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {
+		//recibe una temperatura de la heladera, con la vacuna que almacena
+		//si la temperatura de la heladera no es igual a la de la vacuna, vence la vacuna
+		//envía una advertencia de que esas vacunas no están a temperatura correcta
+	}
+	
+	void vacunasVencidas() {
+		//
+	}
+	
 
 	@Override
 	public String toString() {

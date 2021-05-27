@@ -9,6 +9,7 @@ public class Persona //implements Comparable<Persona>
 	private char prioridad;
 	private String vacunaAsignada;
 	private Date fecha;
+	private boolean vacunado;
 		
 	public Persona(String nom, String ape, int edad, Character salud, Character comorbilidad) {
 		this.nombre = nom;
@@ -16,10 +17,19 @@ public class Persona //implements Comparable<Persona>
 		this.edad = edad;
 		this.trabajadorDeSalud = salud;
 		this.comorbilidades = comorbilidad;
+		this.vacunado = vacunado;
 	}
 	
 	public int getEdad() {
 		return edad;
+	}
+
+	public boolean isVacunado() {
+		return vacunado;
+	}
+
+	public void setVacunado(boolean vacunado) {
+		this.vacunado = vacunado;
 	}
 
 	public void setEdad(int edad) {
