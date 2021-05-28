@@ -105,7 +105,7 @@ public class Vacunatorio {
 	}
 	
 	void vacunasVencidas() {
-		//
+		//se chequea con la fecha si venció
 	}
 	
 
