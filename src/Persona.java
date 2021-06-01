@@ -1,25 +1,32 @@
-import java.util.Date;
 
 public class Persona //implements Comparable<Persona> 
 {
 	//fecha de vacunacion depende la implementacion
 	private int edad;
 	private String nombre, apellido;
-	private char trabajadorDeSalud, comorbilidades;
+	private boolean trabajadorDeSalud, comorbilidades, vacunado;
 	private char prioridad;
 	private String vacunaAsignada;
-	private Date fecha;
-	private boolean vacunado;
-		
-	public Persona(String nom, String ape, int edad, Character salud, Character comorbilidad) {
+	private Fecha fecha;
+	
+	
+	//Constructor Persona
+	public Persona(String nom, String ape, Integer edad, Boolean salud, Boolean comorbilidad) {
 		this.nombre = nom;
 		this.apellido = ape;
 		this.edad = edad;
 		this.trabajadorDeSalud = salud;
 		this.comorbilidades = comorbilidad;
-		this.vacunado = vacunado;
+		//this.vacunado = vacunado;
 	}
 	
+	//Constructor 2 para Persona
+	public Persona(Fecha fecha2, Boolean salud, Boolean comorbilidad) {
+		this.fecha = fecha2;
+		this.trabajadorDeSalud = salud;
+		this.comorbilidades = comorbilidad;
+	}
+
 	public int getEdad() {
 		return edad;
 	}
@@ -36,19 +43,19 @@ public class Persona //implements Comparable<Persona>
 		this.edad = edad;
 	}
 
-	public char getTrabajadorDeSalud() {
+	public boolean getTrabajadorDeSalud() {
 		return trabajadorDeSalud;
 	}
 
-	public void setTrabajadorDeSalud(char trabajadorDeSalud) {
+	public void setTrabajadorDeSalud(boolean trabajadorDeSalud) {
 		this.trabajadorDeSalud = trabajadorDeSalud;
 	}
 
-	public char getComorbilidades() {
+	public boolean getComorbilidades() {
 		return comorbilidades;
 	}
 
-	public void setComorbilidades(char comorbilidades) {
+	public void setComorbilidades(boolean comorbilidades) {
 		this.comorbilidades = comorbilidades;
 	}
 
@@ -68,38 +75,12 @@ public class Persona //implements Comparable<Persona>
 		this.vacunaAsignada = vacunaAsignada;
 	}
 	
-	public Date getFecha() {
+	public Fecha getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(Fecha fecha) {
 		this.fecha = fecha;
-	}
-
-	public boolean esTrabajadorDeSalud() {
-		switch (Character.toLowerCase(this.trabajadorDeSalud)) {
-		case 'y': {
-			return true;
-		}
-		case 'n': {
-			return false;
-		}
-		default:
-			throw new IllegalArgumentException("Tiene que ser Y para si y N para no");
-		}
-	}
-	
-	public boolean tieneComorbilidades() {
-		switch (Character.toLowerCase(this.comorbilidades)) {
-		case 'y': {
-			return true;
-		}
-		case 'n': {
-			return false;
-		}
-		default:
-			throw new IllegalArgumentException("Tiene que ser Y para si y N para no");
-		}
 	}
 	
 	boolean esMenorDe60() {
