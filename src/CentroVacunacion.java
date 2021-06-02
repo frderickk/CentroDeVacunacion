@@ -184,6 +184,7 @@ public class CentroVacunacion {
 				vacunas.put(codVac, new Sputnik(5, nombre, fechaDeEntrada));
 				cant ++;
 				codVac ++;
+				codVac--;
 			}
 		}
 	}
