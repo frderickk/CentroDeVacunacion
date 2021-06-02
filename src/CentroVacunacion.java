@@ -183,8 +183,6 @@ public class CentroVacunacion {
 			while(cantidad <= cant ) {
 				vacunas.put(codVac, new Sputnik(5));
 				cant ++;
-				
-				FUNCIONA
 				codVac ++;
 			}
 		}
