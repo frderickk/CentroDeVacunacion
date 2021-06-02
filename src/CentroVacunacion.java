@@ -181,9 +181,10 @@ public class CentroVacunacion {
 		if (nombre.toLowerCase() == "astra") {
 			int cantidad = 0;
 			while(cantidad <= cant ) {
-				vacunas.put(codVac, new Sputnik(5));
+				vacunas.put(codVac, new Sputnik());
 				cant ++;
 				codVac ++;
+				codVac--;
 			}
 		}
 	}
