@@ -8,11 +8,21 @@ public class CentroVacunacion {
 	private int capacidad;
 	private HashMap<Integer, Persona> inscriptos;
 	private String nombre;
-//	private HashMap<Integer, Persona> turno;
-//  private HashMap<Integer, Persona> vacunados;
+	private HashMap<Integer, Persona> turno;
+    private HashMap<Integer, Persona> vacunados;
+    
+    private HashMap<Integer, Vacunas> vacunas; //Stock
 	
 	private int vacPfizerVen;
 	private int vacModernaVen;
+	
+	private int codVac;
+	
+	private int stockPfizer;
+	private int stockAstra;
+	private int stockSputnik;
+	private int stockModerna;
+	private int stockSino;
 	
 
 	/**
@@ -25,6 +35,10 @@ public class CentroVacunacion {
 		this.capacidad = capacidadDiaria;
 		inscriptos = new HashMap<Integer, Persona>();
 		this.nombre = nombreVacunatorio;
+		
+		if(capacidadDiaria < 0) {
+			throw new RuntimeException("El centro no tiene capacidad");
+		}
 //		vacunaAsignada = new HashMap<Integer, Vacunas>();
 	}
 
@@ -39,6 +53,9 @@ public class CentroVacunacion {
 	void inscribirPersona(int dni, Fecha fechaDeNacimiento, Boolean salud, Boolean comorbilidad) {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
+		}
+		else if (Fecha.hoy() - fechaDeNacimiento < 18) {
+			throw new RuntimeException("Es menor de edad");
 		}
 		inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
 	}
@@ -161,7 +178,14 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		
+		if (nombre.toLowerCase() == "astra") {
+			int cantidad = 0;
+			while(cantidad <= cant ) {
+				vacunas.put(codVac, new Sputnik(5));
+				cant ++;
+				codVac ++;
+			}
+		}
 	}
 	
 	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {

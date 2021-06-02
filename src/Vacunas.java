@@ -1,28 +1,19 @@
 
 public class Vacunas {
 
-	protected int temperatura, cantidad;
+	protected int temperatura;
+	protected String nombre;
+	protected Fecha fecha;
 	
-	public Vacunas(int cantidad) {
-		this.cantidad = cantidad;
+	public Vacunas(int temp, String nombre, Fecha fechaIngreso) {
+		this.temperatura = temp;
+		this.nombre = nombre;
+		this.fecha = fechaIngreso;
 	}
 	
-	void agregarVacuna() {
-		cantidad++;
-	}
-	
-	void vacunaAplicada() {
-		cantidad--;
-	}
-	
-	int stock() {
-		return cantidad;
-	}
 
 	@Override
 	public String toString() {
-		return "Vacunas "+ cantidad;
-	}
-	
-	
+		return nombre + "la temperatura de almacenaje es: " + temperatura;
+	}	
 }

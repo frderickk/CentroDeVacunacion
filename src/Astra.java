@@ -1,23 +1,8 @@
 
 public class Astra extends Vacunas {
 
-	public Astra(int cantidad) {
-		super(cantidad);
+	public Astra(int temp, String nombre, Fecha fechaIngreso) {
+		super(temp, nombre, fechaIngreso);
+		// TODO Auto-generated constructor stub
 	}
-
-	void agregarVacuna() {
-		super.agregarVacuna();
-	}
-
-	void vacunaAplicada() {
-		super.vacunaAplicada();
-	}
-
-	
-	int stock() {
-		return super.stock();
-	}
-
-	
-
 }

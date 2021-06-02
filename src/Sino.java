@@ -1,23 +1,9 @@
 
 public class Sino extends Vacunas {
 
-	public Sino(int cantidad) {
-		super(cantidad);
-	}
-
-	
-	void agregarVacuna() {
-		super.agregarVacuna();
-	}
-
-	
-	void vacunaAplicada() {
-		super.vacunaAplicada();
-	}
-
-	
-	int stock() {
-		return super.stock();
+	public Sino(int temp, String nombre, Fecha fechaIngreso) {
+		super(temp, nombre, fechaIngreso);
+		// TODO Auto-generated constructor stub
 	}
 
 }

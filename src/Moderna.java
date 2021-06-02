@@ -1,23 +1,7 @@
 
 public class Moderna extends Vacunas {
-
-	public Moderna(int cantidad) {
-		super(cantidad);
+	public Moderna(int temp, String nombre, Fecha fechaIngreso) {
+		super(temp, nombre, fechaIngreso);
+		// TODO Auto-generated constructor stub
 	}
-
-	
-	void agregarVacuna() {
-		super.agregarVacuna();
-	}
-
-	
-	void vacunaAplicada() {
-		super.vacunaAplicada();
-	}
-
-	
-	int stock() {
-		return super.stock();
-	}
-
 }
