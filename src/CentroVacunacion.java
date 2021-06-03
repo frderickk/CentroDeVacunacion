@@ -36,6 +36,7 @@ public class CentroVacunacion {
 		this.capacidad = capacidadDiaria;
 		inscriptos = new HashMap<Integer, Persona>();
 		vacunas = new HashMap<Integer, Vacunas>();
+		vacunados = new HashMap<Integer, Persona>();
 		this.nombre = nombreVacunatorio;
 		
 		if(capacidadDiaria < 0) {
@@ -65,10 +66,9 @@ public class CentroVacunacion {
 		 }
 		 else {
 			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+			 definirPrioridad();
 		 	}
 		 }
-
-
 
 	
 	/**
@@ -97,8 +97,8 @@ public class CentroVacunacion {
 	}
 	
 	public void definirPrioridad() {
-			Iterator<Integer> it =  inscriptos.keySet().iterator();
-			while(it.hasNext()) {
+		Iterator<Integer> it =  inscriptos.keySet().iterator();
+		while(it.hasNext()) {
 			Integer key = (Integer) it.next();
 			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
 			inscriptos.get(key).setPrioridad('1'); 
@@ -112,7 +112,7 @@ public class CentroVacunacion {
 			else {
 				inscriptos.get(key).setPrioridad('4');
 			}
-			}
+		}
 	}
 		
 	
@@ -286,7 +286,7 @@ public class CentroVacunacion {
 
 	@Override
 	public String toString() {
-		return "" + vacunas;
+		return "" + inscriptos;
 	}
 	
 	

@@ -100,7 +100,7 @@ public class Persona //implements Comparable<Persona>
 
 	@Override
 	public String toString() {
-		return "" + nombre + " " + apellido  + ", "  + " años";
+		return "" + prioridad;
 	}
 	
 }
