@@ -12,6 +12,7 @@ public class Principal {
 		System.out.println();
 
 		centro.ingresarVacunas("Astra", 10, new Fecha(15,5,2021));
+		centro.ingresarVacunas("Sputnik", 10, new Fecha(15,5,2021));
 		
 		System.out.println(centro);
 	

@@ -34,6 +34,7 @@ public class CentroVacunacion {
 	public CentroVacunacion(String nombreVacunatorio, int capacidadDiaria) {
 		this.capacidad = capacidadDiaria;
 		inscriptos = new HashMap<Integer, Persona>();
+		vacunas = new HashMap<Integer, Vacunas>();
 		this.nombre = nombreVacunatorio;
 		
 		if(capacidadDiaria < 0) {
@@ -54,9 +55,9 @@ public class CentroVacunacion {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
-		else if (Fecha.hoy() - fechaDeNacimiento < 18) {
-			throw new RuntimeException("Es menor de edad");
-		}
+//		else if (Fecha.hoy() - fechaDeNacimiento < 18) {
+//			throw new RuntimeException("Es menor de edad");
+//		}
 		inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
 	}
 
@@ -178,7 +179,7 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		if (nombre == "Astra") {
+		if (nombre == "AstraZeneca") {
 			int cantidad = 0;
 			while(cantidad <= cant) {
 				vacunas.put(codVac, new Astra(fechaDeEntrada));
@@ -186,14 +187,46 @@ public class CentroVacunacion {
 				codVac ++;
 			}
 		}
+		if (nombre == "Sputnik") {
+			int cantidad = 0;
+			while(cantidad <= cant) {
+				vacunas.put(codVac, new Sputnik(fechaDeEntrada));
+				cantidad ++;
+				codVac ++;
+			}
+		}
+		if (nombre == "Moderna") {
+			int cantidad = 0;
+			while(cantidad <= cant) {
+				vacunas.put(codVac, new Moderna(fechaDeEntrada));
+				cantidad ++;
+				codVac ++;
+			}
+		}
+		if (nombre == "Sinopharm") {
+			int cantidad = 0;
+			while(cantidad <= cant) {
+				vacunas.put(codVac, new Sino(fechaDeEntrada));
+				cantidad ++;
+				codVac ++;
+			}
+		}
+		if (nombre == "Pfizer") {
+			int cantidad = 0;
+			while(cantidad <= cant) {
+				vacunas.put(codVac, new Pfizer(fechaDeEntrada));
+				cantidad ++;
+				codVac ++;
+			}
+		}
 	}
 	
-	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {
-		//recibe una temperatura de la heladera, con la vacuna que almacena
-		//si la temperatura de la heladera no es igual a la de la vacuna, vence la vacuna
-		//env�a una advertencia de que esas vacunas no est�n a temperatura correcta
-	}
-	
+//	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {
+//		//recibe una temperatura de la heladera, con la vacuna que almacena
+//		//si la temperatura de la heladera no es igual a la de la vacuna, vence la vacuna
+//		//env�a una advertencia de que esas vacunas no est�n a temperatura correcta
+//	}
+//	
 	
 	/**
 	* Devuelve en O(1) un Diccionario:
