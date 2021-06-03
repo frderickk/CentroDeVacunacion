@@ -13,6 +13,6 @@ public class Vacunas {
 
 	@Override
 	public String toString() {
-		return "la temperatura de almacenaje es: ";
+		return "Vacuna: ";
 	}	
 }
