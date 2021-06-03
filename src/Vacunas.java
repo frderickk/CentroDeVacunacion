@@ -2,6 +2,7 @@
 public class Vacunas {
 
 	protected Fecha fecha;
+	protected String nombre;
 	
 	public Vacunas(Fecha fechaIngreso) {
 		this.fecha = fechaIngreso;

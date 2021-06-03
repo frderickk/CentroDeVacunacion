@@ -14,7 +14,7 @@ public class Principal {
 		centro.ingresarVacunas("AstraZeneca", 10, new Fecha(15,5,2021));
 		centro.ingresarVacunas("Sputnik", 10, new Fecha(15,5,2021));
 		
-		System.out.println(centro.vacunasDisponibles());
+		System.out.println(centro.vacunasDisponibles("Sputnik"));
 	
 		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
 		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true);

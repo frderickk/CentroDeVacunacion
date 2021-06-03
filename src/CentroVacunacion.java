@@ -278,9 +278,6 @@ public class CentroVacunacion {
 		}
 	}
 	
-//	void vacunaVencida() {
-//		if(vacunas.containsKey(key))
-//	}
 	
 //	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {
 //		//recibe una temperatura de la heladera, con la vacuna que almacena
@@ -313,7 +310,25 @@ public class CentroVacunacion {
 	* vacuna especificado.
 	*/
 	int vacunasDisponibles(String nombre) {
-		return 1;
+		switch (nombre) {
+		case "AstraZeneca": {
+			return stockAstra;
+		}
+		case "Sputnik": {
+			return stockSputnik;
+		}
+		case "Moderna": {
+			return stockModerna;
+		}
+		case "Sinopharm": {
+			return stockSino;
+		}
+		case "Pfizer": {
+			return stockPfizer;
+		}
+		default:
+			throw new IllegalArgumentException("El nombre de la vacuna ingresada no es correcto");
+		}
 	}
 	
 
