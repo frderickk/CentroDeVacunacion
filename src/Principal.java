@@ -11,10 +11,10 @@ public class Principal {
 		System.out.println("-----------------------------------");
 		System.out.println();
 
-		centro.ingresarVacunas("Astra", 10, new Fecha(15,5,2021));
+		centro.ingresarVacunas("AstraZeneca", 10, new Fecha(15,5,2021));
 		centro.ingresarVacunas("Sputnik", 10, new Fecha(15,5,2021));
 		
-		System.out.println(centro);
+		System.out.println(centro.vacunasDisponibles());
 	
 		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
 		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true);
@@ -22,8 +22,6 @@ public class Principal {
 		centro.inscribirPersona(29223000, new Fecha(2, 5, 1982), false, true);
 		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false);
 		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, false);
-		
-		centro.definirPrioridad();
 		
 		System.out.println(centro);
 		

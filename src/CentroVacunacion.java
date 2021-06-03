@@ -66,6 +66,7 @@ public class CentroVacunacion {
 		 }
 		 else {
 			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+			 definirPrioridad();
 		 	}
 		 }
 
@@ -107,8 +108,8 @@ public class CentroVacunacion {
 			else if(inscriptos.get(key).edad() > 60) {
 					inscriptos.get(key).setPrioridad('3');
 				}
-				else {
-					inscriptos.get(key).setPrioridad('4');
+			else {
+				inscriptos.get(key).setPrioridad('4');
 				}
 			
 		}
@@ -224,47 +225,62 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
+		if(cant < 0) {
+			throw new RuntimeException("La cantidad ingresada no puede ser negativa");
+		}
 		if (nombre == "AstraZeneca") {
 			int cantidad = 0;
-			while(cantidad <= cant) {
+			while(cantidad < cant) {
 				vacunas.put(codVac, new Astra(fechaDeEntrada));
 				cantidad ++;
 				codVac ++;
+				stockAstra++;
 			}
 		}
-		if (nombre == "Sputnik") {
+		else if (nombre == "Sputnik") {
 			int cantidad = 0;
-			while(cantidad <= cant) {
+			while(cantidad < cant) {
 				vacunas.put(codVac, new Sputnik(fechaDeEntrada));
 				cantidad ++;
 				codVac ++;
+				stockSputnik++;
 			}
 		}
-		if (nombre == "Moderna") {
+		else if (nombre == "Moderna") {
 			int cantidad = 0;
-			while(cantidad <= cant) {
+			while(cantidad < cant) {
 				vacunas.put(codVac, new Moderna(fechaDeEntrada));
 				cantidad ++;
 				codVac ++;
+				stockModerna++;
 			}
 		}
-		if (nombre == "Sinopharm") {
+		else if (nombre == "Sinopharm") {
 			int cantidad = 0;
-			while(cantidad <= cant) {
+			while(cantidad < cant) {
 				vacunas.put(codVac, new Sino(fechaDeEntrada));
 				cantidad ++;
 				codVac ++;
+				stockSino++;
 			}
 		}
-		if (nombre == "Pfizer") {
+		else if (nombre == "Pfizer") {
 			int cantidad = 0;
-			while(cantidad <= cant) {
+			while(cantidad < cant) {
 				vacunas.put(codVac, new Pfizer(fechaDeEntrada));
 				cantidad ++;
 				codVac ++;
+				stockPfizer++;
 			}
 		}
+		else {
+			throw new RuntimeException("El nombre de la vacuna ingresada no es correcto");
+		}
 	}
+	
+//	void vacunaVencida() {
+//		if(vacunas.containsKey(key))
+//	}
 	
 //	void refrigeracionApropiada(int temperaturaHeladera , String vacuna) {
 //		//recibe una temperatura de la heladera, con la vacuna que almacena
@@ -288,7 +304,7 @@ public class CentroVacunacion {
 	* total de vacunas disponibles no vencidas sin distinción por tipo.
 	*/
 	int vacunasDisponibles() {
-		return 1;
+		return stockAstra + stockModerna + stockPfizer + stockSino + stockSputnik;
 	}
 	
 	
