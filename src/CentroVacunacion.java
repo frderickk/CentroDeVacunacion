@@ -178,13 +178,12 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		if (nombre.toLowerCase() == "astra") {
+		if (nombre == "Astra") {
 			int cantidad = 0;
-			while(cantidad <= cant ) {
-				vacunas.put(codVac, new Sputnik(5, nombre, fechaDeEntrada));
-				cant ++;
+			while(cantidad <= cant) {
+				vacunas.put(codVac, new Astra(fechaDeEntrada));
+				cantidad ++;
 				codVac ++;
-				codVac--;
 			}
 		}
 	}
@@ -226,7 +225,7 @@ public class CentroVacunacion {
 
 	@Override
 	public String toString() {
-		return "" + inscriptos;
+		return "" + vacunas;
 	}
 	
 	
