@@ -55,11 +55,16 @@ public class CentroVacunacion {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
-//		else if (Fecha.hoy() - fechaDeNacimiento < 18) {
-//			throw new RuntimeException("Es menor de edad");
-//		}
-		inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
-	}
+		 if (Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento) < 18) {
+			throw new RuntimeException("Esta persona es menor de edad");
+		}
+		 if(vacunados.containsKey(dni)) {
+			 throw new RuntimeException("Esta persona ya ha sido vacunada");
+		 }
+		 else {
+			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+		 	}
+		 }
 
 	
 	/**
@@ -88,7 +93,7 @@ public class CentroVacunacion {
 	}
 	
 	public void definirPrioridad() {
-//		if(inscriptos.get(dni).getTrabajadorDeSalud() == 'y') {
+//		if(inscriptos.get(dni).getTrabajadorDeSalud() == true) {
 //			this.prioridad = '1';
 //		}
 //		if(this.tieneComorbilidades() == true) {
@@ -100,7 +105,7 @@ public class CentroVacunacion {
 //		else {
 //			this.prioridad = '4';
 //		}
-	}
+//	}
 	
 	void asignarVacuna() {
 //      ver stock individual == true asginar vacuna y sigue, si es false > ponerEnListaDeESpera();
