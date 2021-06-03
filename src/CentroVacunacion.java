@@ -55,6 +55,7 @@ public class CentroVacunacion {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
+<<<<<<< HEAD
 		 if (Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento) < 18) {
 			throw new RuntimeException("Esta persona es menor de edad");
 		}
@@ -65,6 +66,18 @@ public class CentroVacunacion {
 			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
 		 	}
 		 }
+=======
+		if(Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento) < 18) {
+			throw new RuntimeException("Esta persona es menor de 18 años");
+		}
+		if(vacunados.containsKey(dni)) {
+			throw new RuntimeException("Esta persona ya ha sido vacunada");
+		}
+		else {
+			inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+		}
+	}
+>>>>>>> branch 'main' of https://gitlab.com/Rambolin/tpvacunatorio.git
 
 	
 	/**

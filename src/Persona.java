@@ -2,33 +2,26 @@
 public class Persona //implements Comparable<Persona> 
 {
 	//fecha de vacunacion depende la implementacion
-	private int edad;
 	private String nombre, apellido;
 	private boolean trabajadorDeSalud, comorbilidades, vacunado;
 	private char prioridad;
 	private String vacunaAsignada;
-	private Fecha fecha;
+	private Fecha fechaDeTurno, fechaDeNacimiento;
 	
 	
-	//Constructor Persona
-	public Persona(String nom, String ape, Integer edad, Boolean salud, Boolean comorbilidad) {
-		this.nombre = nom;
-		this.apellido = ape;
-		this.edad = edad;
-		this.trabajadorDeSalud = salud;
-		this.comorbilidades = comorbilidad;
-		//this.vacunado = vacunado;
-	}
-	
-	//Constructor 2 para Persona
+	//Constructor para Persona
 	public Persona(Fecha fecha2, Boolean salud, Boolean comorbilidad) {
-		this.fecha = fecha2;
+		this.fechaDeNacimiento = fecha2;
 		this.trabajadorDeSalud = salud;
 		this.comorbilidades = comorbilidad;
 	}
 
-	public int getEdad() {
-		return edad;
+	public Fecha getFechaDeNacimiento() {
+		return fechaDeNacimiento;
+	}
+
+	public void setFechaDeNacimiento(Fecha fechaDeNacimiento) {
+		this.fechaDeNacimiento = fechaDeNacimiento;
 	}
 
 	public boolean isVacunado() {
@@ -37,10 +30,6 @@ public class Persona //implements Comparable<Persona>
 
 	public void setVacunado(boolean vacunado) {
 		this.vacunado = vacunado;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
 	}
 
 	public boolean getTrabajadorDeSalud() {
@@ -76,19 +65,19 @@ public class Persona //implements Comparable<Persona>
 	}
 	
 	public Fecha getFecha() {
-		return fecha;
+		return fechaDeTurno;
 	}
 
 	public void setFecha(Fecha fecha) {
-		this.fecha = fecha;
+		this.fechaDeTurno = fecha;
 	}
 	
-	boolean esMenorDe60() {
-		if (this.edad < 60) {
-			return true;
-		}
-		return false;
-	}
+//	boolean esMenorDe60() {
+//		if (this.fechaDeNacimiento < 60) {
+//			return true;
+//		}
+//		return false;
+//	}
 	
 //	void asignarVacuna(Integer dni) {
 //		if(esMenorDe60()) {
@@ -110,7 +99,7 @@ public class Persona //implements Comparable<Persona>
 
 	@Override
 	public String toString() {
-		return "" + nombre + " " + apellido  + ", " +  edad + " años";
+		return "" + nombre + " " + apellido  + ", "  + " años";
 	}
 	
 }
