@@ -16,8 +16,9 @@ public class Persona //implements Comparable<Persona>
 		this.comorbilidades = comorbilidad;
 	}
 
-	public Fecha getFechaDeNacimiento() {
-		return fechaDeNacimiento;
+	public int edad() {
+		return  Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento);
+		
 	}
 
 	public void setFechaDeNacimiento(Fecha fechaDeNacimiento) {

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
@@ -96,6 +97,25 @@ public class CentroVacunacion {
 	}
 	
 	public void definirPrioridad() {
+			Iterator<Integer> it =  inscriptos.keySet().iterator();
+			while(it.hasNext()) {
+			Integer key = (Integer) it.next();
+			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
+			inscriptos.get(key).setPrioridad('1'); 
+			}
+			if(inscriptos.get(key).getComorbilidades() == true) {
+				inscriptos.get(key).setPrioridad('2');
+			}
+			if(inscriptos.get(key).edad() > 60) {
+				inscriptos.get(key).setPrioridad('3');
+			}
+			else {
+				inscriptos.get(key).setPrioridad('4');
+			}
+			}
+	}
+		
+	
 //		if(inscriptos.get(dni).getTrabajadorDeSalud() == true) {
 //			this.prioridad = '1';
 //		}
