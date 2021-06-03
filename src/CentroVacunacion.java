@@ -55,10 +55,15 @@ public class CentroVacunacion {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
-//		else if (Fecha.hoy() - fechaDeNacimiento < 18) {
-//			throw new RuntimeException("Es menor de edad");
-//		}
-		inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+		if(Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento) < 18) {
+			throw new RuntimeException("Esta persona es menor de 18 años");
+		}
+		if(vacunados.containsKey(dni)) {
+			throw new RuntimeException("Esta persona ya ha sido vacunada");
+		}
+		else {
+			inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+		}
 	}
 
 	
