@@ -80,9 +80,8 @@ public class CentroVacunacion {
 	//metodo para asginar turno 
 	
 	void generarTurnos(Fecha fechaInicial) {
-		
 		heladeras.vacunaVencida();
-		heladeras.moverVacunas2();
+		heladeras.moverVacunas();
 		heladeras.quitarVacunaVencida();
 		//chequear lista de espera, la primera vez nos da 0.
 		//ver stock general == true sigue si es == false > listadeespera
@@ -91,6 +90,7 @@ public class CentroVacunacion {
 		//verificarCapacidad();
 		//turno (Date)
 	}
+	
 	
 	public void definirPrioridad() {
 		for (int key : inscriptos.keySet()) {
@@ -105,7 +105,7 @@ public class CentroVacunacion {
 				}
 			else {
 				inscriptos.get(key).setPrioridad('4');
-				}
+			}
 		}
 
 	}
@@ -192,7 +192,7 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		heladeras.ingresarVacunas2(nombre, cant, fechaDeEntrada);
+		heladeras.ingresarVacunas(nombre, cant, fechaDeEntrada);
 	}
 	
 	

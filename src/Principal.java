@@ -11,10 +11,11 @@ public class Principal {
 		System.out.println("-----------------------------------");
 		System.out.println();
 
-		centro.ingresarVacunas("Pfizer", 2, new Fecha(15,1,2021));
-		centro.ingresarVacunas("Pfizer", 1, new Fecha(1,6,2021));
+		centro.ingresarVacunas("Pfizer", 10, new Fecha(15,1,2021));
+		centro.ingresarVacunas("Moderna", 10, new Fecha(1,6,2021));
 		
 		System.out.println(centro.vacunasDisponibles());
+		System.out.println(centro.vacunasDisponibles("Pfizer"));
 		
 //		System.out.println(centro.vacunasDisponibles("Sputnik"));
 //		System.out.println(centro.vacunasDisponibles("AstraZeneca"));
@@ -29,11 +30,11 @@ public class Principal {
 		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false);
 		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, false);
 		
-		centro.vacunasVencidas();
+//		centro.vacunasVencidas();
 		
 		//System.out.println(centro.nomb());
 		
-		System.out.println(centro);
+//		System.out.println(centro);
 
 //		centro.generarTurnos(fTurnos);
 //

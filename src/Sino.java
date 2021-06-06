@@ -4,11 +4,6 @@ public class Sino extends Vacunas {
 	public Sino(Fecha fechaIngreso) {
 		super(fechaIngreso);
 	}
-
-	@Override
-	public Fecha getFecha() {
-		return super.getFecha();
-	}
 	
 	@Override
 	public String getNombre() {
@@ -18,6 +13,11 @@ public class Sino extends Vacunas {
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	@Override
+	public Fecha getFecha() {
+		return null;
 	}
 
 }

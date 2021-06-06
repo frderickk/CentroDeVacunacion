@@ -5,6 +5,8 @@ public abstract class Vacunas {
 	protected String nombre;
 	protected boolean vencida;
 	protected boolean reservada;
+	
+	
 	public Vacunas(Fecha fechaIngreso) {
 		this.fecha = fechaIngreso;
 		this.vencida = false;
@@ -21,6 +23,14 @@ public abstract class Vacunas {
 
 	public Fecha getFecha() {
 		return fecha;
+	}
+
+	public boolean isReservada() {
+		return reservada;
+	}
+
+	public void setReservada(boolean reservada) {
+		this.reservada = reservada;
 	}
 
 	@Override
