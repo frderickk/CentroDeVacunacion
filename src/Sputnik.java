@@ -5,20 +5,26 @@ public class Sputnik extends Vacunas {
 		super(fechaIngreso);
 	}
 	
-	
-
 	@Override
 	public Fecha getFecha() {
-		// TODO Auto-generated method stub
 		return super.getFecha();
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "Sputnik: Fecha de ingreso: " + fecha;
 	}
 
-	
+	@Override
+	public boolean estaVencida() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getNombre() {
+		// TODO Auto-generated method stub
+		return "Sputnik";
+	}
+
 }

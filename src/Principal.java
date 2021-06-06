@@ -12,12 +12,15 @@ public class Principal {
 		System.out.println();
 
 		centro.ingresarVacunas("AstraZeneca", 10, new Fecha(15,5,2021));
-		
-		System.out.println(centro.vacunasDisponibles());
-		
 		centro.ingresarVacunas("Sputnik", 10, new Fecha(15,5,2021));
 		
 		System.out.println(centro.vacunasDisponibles());
+		
+		System.out.println(centro.vacunasDisponibles("Sputnik"));
+		System.out.println(centro.vacunasDisponibles("AstraZeneca"));
+		System.out.println(centro.vacunasDisponibles("Moderna"));
+		System.out.println(centro.vacunasDisponibles("Sinopharm"));
+		System.out.println(centro.vacunasDisponibles("Pfizer"));
 	
 		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
 		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true);
@@ -27,7 +30,7 @@ public class Principal {
 		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, false);
 		
 		System.out.println(centro);
-		
+
 //		centro.generarTurnos(fTurnos);
 //
 //		System.out.println("-------------- Turnos -------------");

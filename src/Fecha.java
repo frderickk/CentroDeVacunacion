@@ -110,6 +110,11 @@ public class Fecha implements Comparable<Fecha> {
 	public String toString() {
 		return "" + dia() + "/" + mes() + "/" + anio();
 	}
+
+	public static int diferenciaMes(Fecha hoy, Fecha fNacimiento) {
+		Period periodo = fNacimiento.fecha.until(hoy.fecha);
+		return periodo.getMonths();
+	}
 	
 	
 

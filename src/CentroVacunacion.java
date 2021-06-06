@@ -1,24 +1,23 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CentroVacunacion {
 	
 	private int capacidad;
-	private HashMap<Integer, Persona> inscriptos;
 	private String nombre;
+	private HashMap<Integer, Persona> inscriptos;
+	private HashSet<Persona> listaEspera;
 	private HashMap<Integer, Persona> turno;
     private HashMap<Integer, Persona> vacunados;
-    private HeladeraVacunas heladeras;
-    
     private HashMap<Integer, Vacunas> vacunas; //Stock
-	
-	private int vacPfizerVen;
-	private int vacModernaVen;
-	
-	private int codVac;
+    private HeladeraVacunas heladeras;
+
+	//private int codVac;
 	
 
 	/**
@@ -29,16 +28,15 @@ public class CentroVacunacion {
 	*/
 	public CentroVacunacion(String nombreVacunatorio, int capacidadDiaria) {
 		this.capacidad = capacidadDiaria;
+		this.nombre = nombreVacunatorio;
 		inscriptos = new HashMap<Integer, Persona>();
+		listaEspera = new HashSet<Persona>();
 		vacunas = new HashMap<Integer, Vacunas>();
 		vacunados = new HashMap<Integer, Persona>();
 		heladeras = new HeladeraVacunas();
-		this.nombre = nombreVacunatorio;
-		
 		if(capacidadDiaria < 0) {
 			throw new RuntimeException("El centro no tiene capacidad");
 		}
-//		vacunaAsignada = new HashMap<Integer, Vacunas>();
 	}
 
 	
@@ -93,7 +91,6 @@ public class CentroVacunacion {
 	}
 	
 	public void definirPrioridad() {
-		
 		for (int key : inscriptos.keySet()) {
 			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
 				inscriptos.get(key).setPrioridad('1'); 
@@ -107,9 +104,8 @@ public class CentroVacunacion {
 			else {
 				inscriptos.get(key).setPrioridad('4');
 				}
-			
 		}
-		asd
+		//asd
 		
 //		Iterator<Integer> it =  inscriptos.keySet().iterator();
 //		while(it.hasNext()) {
@@ -129,20 +125,6 @@ public class CentroVacunacion {
 //		}
 	}
 		
-	
-//		if(inscriptos.get(dni).getTrabajadorDeSalud() == true) {
-//			this.prioridad = '1';
-//		}
-//		if(this.tieneComorbilidades() == true) {
-//			this.prioridad = '2';
-//		}
-//		if(this.esMenorDe60() == false) {
-//			this.prioridad = '3';
-//		}
-//		else {
-//			this.prioridad = '4';
-//		}
-//	}
 	
 	void asignarVacuna() {
 //      ver stock individual == true asginar vacuna y sigue, si es false > ponerEnListaDeESpera();
@@ -192,7 +174,11 @@ public class CentroVacunacion {
 	*/
 	//metodo que nos da una lista con las personas restantes por vacunar
 	List <Integer> listaDeEspera() {
-		return listaDeEspera();
+		ArrayList<Integer> lista = new ArrayList<>();
+		for (Integer p : inscriptos.keySet()) {
+			lista.add(listaEspera.hashCode());
+		}
+		return lista;
 	}
 	
 	
@@ -272,7 +258,7 @@ public class CentroVacunacion {
 //		else {
 //			throw new RuntimeException("El nombre de la vacuna ingresada no es correcto");
 //		}
-		heladeras.vacunasNuevas(nombre, cant, fechaDeEntrada);
+		heladeras.ingresarVacunas(nombre, cant, fechaDeEntrada);
 	}
 	
 	
@@ -289,7 +275,6 @@ public class CentroVacunacion {
 	* - valor: cantidad de vacunas vencidas conocidas hasta el momento.
 	*/
 	Map<String, Integer> reporteVacunasVencidas() {
-		//se chequea con la fecha si venci�
 		return reporteVacunasVencidas();
 	}
 	
@@ -301,16 +286,14 @@ public class CentroVacunacion {
 		return heladeras.vacunasDisponibles();
 	}
 	
-	
 	/**
 	* total de vacunas disponibles no vencidas que coincida con el nombre de
 	* vacuna especificado.
 	*/
 	int vacunasDisponibles(String nombre) {
-		return 1;//heladeras.vacunasDisponibles(nombre);
+		return heladeras.vacunasDisponibles(nombre);
 	}
 	
-
 	@Override
 	public String toString() {
 		return "" + heladeras;
