@@ -16,11 +16,6 @@ public class Astra extends Vacunas {
 	}
 
 	@Override
-	public boolean estaVencida() {
-		return false;
-	}
-
-	@Override
 	public String getNombre() {
 		return "AstraZeneca";
 	}

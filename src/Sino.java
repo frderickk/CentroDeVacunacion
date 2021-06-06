@@ -9,22 +9,15 @@ public class Sino extends Vacunas {
 	public Fecha getFecha() {
 		return super.getFecha();
 	}
+	
+	@Override
+	public String getNombre() {
+		return "Sinopharm";
+	}
 
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	@Override
-	public boolean estaVencida() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String getNombre() {
-		// TODO Auto-generated method stub
-		return "Sinopharm";
 	}
 
 }

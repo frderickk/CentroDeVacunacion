@@ -70,16 +70,16 @@ public class HeladeraVacunas {
 	}
 	
 	public void moverVacunas() {
-		for (String nombreVacuna : vacunas.keySet()) {
-		ArrayList<Vacunas> lista = vacunas.get(nombreVacuna);
-		Iterator<Vacunas> it = lista.iterator();
-			while (it.hasNext()) {
-				if(it.next().estaVencida()) {
-					it.remove();
-					vacunasVencidas.put(nombreVacuna, vacunasVencidas.get(nombreVacuna));
-				}
-			}
-		}
+//		for (String nombreVacuna : vacunas.keySet()) {
+//		ArrayList<Vacunas> lista = vacunas.get(nombreVacuna);
+//		Iterator<Vacunas> it = lista.iterator();
+//			while (it.hasNext()) {
+//				if(it.next().estaVencida()) {
+//					it.remove();
+//					vacunasVencidas.put(nombreVacuna, vacunasVencidas.get(nombreVacuna));
+//				}
+//			}
+//		}
 	}
 	
 
