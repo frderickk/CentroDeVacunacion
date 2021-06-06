@@ -81,6 +81,18 @@ public class CentroVacunacion {
 	*
 	*/
 	//metodo para asginar turno 
+	
+	void vacunasVencidas() {
+		heladeras.vacunaVencida();
+		heladeras.moverVacunas();
+		heladeras.quitarVacunaVencida();
+	}
+	
+	
+	public String nomb() {
+		return heladeras.vacunas2.get(0).getNombre();
+	}
+	
 	void generarTurnos(Fecha fechaInicial) {
 		//chequear lista de espera, la primera vez nos da 0.
 		//ver stock general == true sigue si es == false > listadeespera
@@ -105,24 +117,7 @@ public class CentroVacunacion {
 				inscriptos.get(key).setPrioridad('4');
 				}
 		}
-		//asd
-		
-//		Iterator<Integer> it =  inscriptos.keySet().iterator();
-//		while(it.hasNext()) {
-//			Integer key = (Integer) it.next();
-//			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
-//			inscriptos.get(key).setPrioridad('1'); 
-//			}
-//			if(inscriptos.get(key).getComorbilidades() == true) {
-//				inscriptos.get(key).setPrioridad('2');
-//			}
-//			if(inscriptos.get(key).edad() > 60) {
-//				inscriptos.get(key).setPrioridad('3');
-//			}
-//			else {
-//				inscriptos.get(key).setPrioridad('4');
-//			}
-//		}
+
 	}
 		
 	
@@ -207,58 +202,7 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-//		if(cant < 0) {
-//			throw new RuntimeException("La cantidad ingresada no puede ser negativa");
-//		}
-//		if (nombre == "AstraZeneca") {
-//			int cantidad = 0;
-//			while(cantidad < cant) {
-//				vacunas.put(codVac, new Astra(fechaDeEntrada));
-//				cantidad ++;
-//				codVac ++;
-//				stockAstra++;
-//			}
-//		}
-//		else if (nombre == "Sputnik") {
-//			int cantidad = 0;
-//			while(cantidad < cant) {
-//				vacunas.put(codVac, new Sputnik(fechaDeEntrada));
-//				cantidad ++;
-//				codVac ++;
-//				stockSputnik++;
-//			}
-//		}
-//		else if (nombre == "Moderna") {
-//			int cantidad = 0;
-//			while(cantidad < cant) {
-//				vacunas.put(codVac, new Moderna(fechaDeEntrada));
-//				cantidad ++;
-//				codVac ++;
-//				stockModerna++;
-//			}
-//		}
-//		else if (nombre == "Sinopharm") {
-//			int cantidad = 0;
-//			while(cantidad < cant) {
-//				vacunas.put(codVac, new Sino(fechaDeEntrada));
-//				cantidad ++;
-//				codVac ++;
-//				stockSino++;
-//			}
-//		}
-//		else if (nombre == "Pfizer") {
-//			int cantidad = 0;
-//			while(cantidad < cant) {
-//				vacunas.put(codVac, new Pfizer(fechaDeEntrada));
-//				cantidad ++;
-//				codVac ++;
-//				stockPfizer++;
-//			}
-//		}
-//		else {
-//			throw new RuntimeException("El nombre de la vacuna ingresada no es correcto");
-//		}
-		heladeras.ingresarVacunas(nombre, cant, fechaDeEntrada);
+		heladeras.ingresarVacunas2(nombre, cant, fechaDeEntrada);
 	}
 	
 	

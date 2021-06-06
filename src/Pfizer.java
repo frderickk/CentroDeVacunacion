@@ -1,7 +1,6 @@
 
 public class Pfizer extends Vacunas {
 
-	private boolean vencida;
 
 	public Pfizer(Fecha fechaIngreso) {
 		super(fechaIngreso);

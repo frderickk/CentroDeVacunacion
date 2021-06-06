@@ -1,7 +1,6 @@
 
 public class Moderna extends Vacunas {
 	
-	private boolean vencida;
 
 	public Moderna(Fecha fechaIngreso) {
 		super(fechaIngreso);
