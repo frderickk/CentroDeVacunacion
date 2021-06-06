@@ -48,7 +48,6 @@ public abstract class Vacunas {
 		return true;
 	}
 
-	abstract public boolean estaVencida();
 	
 	abstract public String getNombre();
 	

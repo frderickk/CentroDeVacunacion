@@ -23,15 +23,6 @@ public class Moderna extends Vacunas {
 		return super.toString();
 	}
 
-	@Override
-	public boolean estaVencida() {
-		if(Fecha.hoy().compareTo(fechaVencimiento) >=0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 
 	@Override
 	public String getNombre() {

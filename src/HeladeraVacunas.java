@@ -25,6 +25,11 @@ public class HeladeraVacunas {
 		vacunasVencidas.put("Pfizer", new ArrayList<Vacunas>());
 	}
 	
+	
+	public void vacunaVencida() {
+		
+	}
+	
 	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
 		if (cant <= 0) {
 			throw new RuntimeException("La cantidad ingresada no puede ser negativa");
