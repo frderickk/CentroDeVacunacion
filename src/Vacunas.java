@@ -4,9 +4,11 @@ public abstract class Vacunas {
 	protected Fecha fecha;
 	protected String nombre;
 	protected boolean vencida;
+	protected boolean reservada;
 	public Vacunas(Fecha fechaIngreso) {
 		this.fecha = fechaIngreso;
 		this.vencida = false;
+		this.reservada = false;
 	}
 
 	public boolean isVencida() {

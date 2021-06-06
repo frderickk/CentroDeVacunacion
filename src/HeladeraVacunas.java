@@ -8,7 +8,6 @@ public class HeladeraVacunas {
 	private int codVac;
 	
 	private HashMap<Integer, Vacunas> vacunas2;
-	private HashMap<Integer, Vacunas> vacunasVencidas2;
 	
 	private HashMap<String, Integer> vacunasVencidas3;
 	
@@ -17,7 +16,6 @@ public class HeladeraVacunas {
 		
 		vacunas2 = new HashMap<Integer, Vacunas>();
 		
-		vacunasVencidas2 = new HashMap<Integer, Vacunas>();
 		vacunasVencidas3 = new HashMap<String, Integer>();
 	}
 	
@@ -76,9 +74,6 @@ public class HeladeraVacunas {
 		return contVacunasDisponibles;
 	}
 	
-	
-
-	
 	public int vacunasDisponibles(String nombre) {
 		int contVacunasDisponibles = 0;
 		for (Integer num : vacunas2.keySet()) {
@@ -99,7 +94,6 @@ public class HeladeraVacunas {
 	public void moverVacunas2() {
 		Integer cont = 0;
 		for (Integer num : vacunas2.keySet()) {
-		
 			if(vacunas2.get(num).isVencida() && vacunas2.get(num).getNombre() == "Pfizer") {
 				cont ++;
 				vacunasVencidas3.put("Pfizer",cont);
@@ -123,7 +117,6 @@ public class HeladeraVacunas {
 
 	@Override
 	public String toString() {
-		return  "Cantidad de vacunas: " + vacunas2 + "Las vacunas vencidas son " +  vacunasVencidas2;
+		return  "Cantidad de vacunas: " + vacunas2 + "Las vacunas vencidas son " +  vacunasVencidas3;
 	}
-	
 }

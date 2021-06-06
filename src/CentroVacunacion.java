@@ -16,8 +16,6 @@ public class CentroVacunacion {
     private HashMap<Integer, Persona> vacunados;
     private HashMap<Integer, Vacunas> vacunas; //Stock
     private HeladeraVacunas heladeras;
-
-	//private int codVac;
 	
 
 	/**
@@ -51,7 +49,6 @@ public class CentroVacunacion {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
-
 		 if (Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento) < 18) {
 			throw new RuntimeException("Esta persona es menor de edad");
 		}
