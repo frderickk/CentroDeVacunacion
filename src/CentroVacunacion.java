@@ -82,18 +82,11 @@ public class CentroVacunacion {
 	*/
 	//metodo para asginar turno 
 	
-	void vacunasVencidas() {
-		heladeras.vacunaVencida();
-		heladeras.moverVacunas();
-		heladeras.quitarVacunaVencida();
-	}
-	
-	
-	public String nomb() {
-		return heladeras.vacunas2.get(0).getNombre();
-	}
-	
 	void generarTurnos(Fecha fechaInicial) {
+		
+		heladeras.vacunaVencida();
+		heladeras.moverVacunas2();
+		heladeras.quitarVacunaVencida();
 		//chequear lista de espera, la primera vez nos da 0.
 		//ver stock general == true sigue si es == false > listadeespera
 		//inscriptos.get(dni).getPrioridad();
@@ -219,7 +212,7 @@ public class CentroVacunacion {
 	* - valor: cantidad de vacunas vencidas conocidas hasta el momento.
 	*/
 	Map<String, Integer> reporteVacunasVencidas() {
-		return reporteVacunasVencidas();
+		return heladeras.reporteVacunasVencidas();
 	}
 	
 	

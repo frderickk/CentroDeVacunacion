@@ -7,34 +7,18 @@ public class HeladeraVacunas {
 	
 	private int codVac;
 	
-	private HashMap<String, ArrayList<Vacunas>> vacunas;
-	private HashMap<String, ArrayList<Vacunas>> vacunasVencidas;
-	
 	private HashMap<Integer, Vacunas> vacunas2;
 	private HashMap<Integer, Vacunas> vacunasVencidas2;
+	
+	private HashMap<String, Integer> vacunasVencidas3;
 	
 	
 	public HeladeraVacunas() {
 		
-		vacunas = new HashMap<String, ArrayList<Vacunas>>();
-		
 		vacunas2 = new HashMap<Integer, Vacunas>();
 		
-		vacunas.put("AstraZeneca", new ArrayList<Vacunas>());
-		vacunas.put("Sputnik", new ArrayList<Vacunas>());
-		vacunas.put("Sinopharm", new ArrayList<Vacunas>());
-		vacunas.put("Moderna", new ArrayList<Vacunas>());
-		vacunas.put("Pfizer", new ArrayList<Vacunas>());
-		
-		vacunasVencidas = new HashMap<String, ArrayList<Vacunas>>();
-		
 		vacunasVencidas2 = new HashMap<Integer, Vacunas>();
-		
-		vacunasVencidas.put("AstraZeneca", new ArrayList<Vacunas>());
-		vacunasVencidas.put("Sputnik", new ArrayList<Vacunas>());
-		vacunasVencidas.put("Sinopharm", new ArrayList<Vacunas>());
-		vacunasVencidas.put("Moderna", new ArrayList<Vacunas>());
-		vacunasVencidas.put("Pfizer", new ArrayList<Vacunas>());
+		vacunasVencidas3 = new HashMap<String, Integer>();
 	}
 	
 	
@@ -79,36 +63,7 @@ public class HeladeraVacunas {
 				throw new RuntimeException("El nombre de la vacuna ingresada no es correcto");
 			}
 		}
-
-}
-	
-	
-	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		if (cant <= 0) {
-			throw new RuntimeException("La cantidad ingresada no puede ser negativa");
-		}
-		for (int i = 0; i < cant; i++) {
-			if (nombre == "AstraZeneca") {
-				vacunas.get(nombre).add(new Astra(fechaDeEntrada));
-			}
-			else if (nombre == "Sputnik") {
-				vacunas.get(nombre).add(new Sputnik(fechaDeEntrada));
-			}
-			else if (nombre == "Sinopharm") {
-				vacunas.get(nombre).add(new Sino(fechaDeEntrada));
-			}
-			else if (nombre == "Moderna") {
-				vacunas.get(nombre).add(new Moderna(fechaDeEntrada));
-			}
-			else if (nombre == "Pfizer") {
-				vacunas.get(nombre).add(new Pfizer(fechaDeEntrada));
-			}
-			else {
-				throw new RuntimeException("El nombre de la vacuna ingresada no es correcto");
-			}
-		}
 	}
-	
 	
 	public int vacunasDisponibles() {
 		
@@ -120,21 +75,40 @@ public class HeladeraVacunas {
 		}
 		return contVacunasDisponibles;
 	}
+	
+	
 
 	
 	public int vacunasDisponibles(String nombre) {
-		return vacunas.get(nombre).size();
+		int contVacunasDisponibles = 0;
+		for (Integer num : vacunas2.keySet()) {
+		if (vacunas2.get(num).getNombre() == nombre)
+			contVacunasDisponibles ++;		
+		}
+		return contVacunasDisponibles;
 	}
 	
-	public void moverVacunas() {
+//	public void moverVacunas() {
+//		for (Integer num : vacunas2.keySet()) {
+//			if(vacunas2.get(num).isVencida()) {
+//				vacunasVencidas2.put(num,vacunas2.get(num));
+//			}
+//			}
+//	}
+	
+	public void moverVacunas2() {
+		Integer cont = 0;
 		for (Integer num : vacunas2.keySet()) {
-			if(vacunas2.get(num).isVencida()) {
-				vacunasVencidas2.put(num,vacunas2.get(num));
-			}
-
-			}
 		
-
+			if(vacunas2.get(num).isVencida() && vacunas2.get(num).getNombre() == "Pfizer") {
+				cont ++;
+				vacunasVencidas3.put("Pfizer",cont);
+			}
+			}
+	}
+	
+	Map<String, Integer> reporteVacunasVencidas() {
+		return vacunasVencidas3;
 	}
 	
 	public void quitarVacunaVencida() {
@@ -146,9 +120,6 @@ public class HeladeraVacunas {
 		}
 		}	
 	}
-
-	
-	
 
 	@Override
 	public String toString() {
