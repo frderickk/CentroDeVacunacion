@@ -11,13 +11,13 @@ public class Pfizer extends Vacunas {
 		return super.getFecha();
 	}
 
-	public boolean isVencida() {
-		return vencida;
-	}
-
-	public void setVencida(boolean vencida) {
-		this.vencida = vencida;
-	}
+//	public boolean isVencida() {
+//		return vencida;
+//	}
+//
+//	public void setVencida(boolean vencida) {
+//		this.vencida = vencida;
+//	}
 
 	@Override
 	public String getNombre() {

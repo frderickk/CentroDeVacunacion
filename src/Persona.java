@@ -6,7 +6,9 @@ public class Persona //implements Comparable<Persona>
 	private boolean trabajadorDeSalud, comorbilidades, vacunado;
 	private char prioridad;
 	private String vacunaAsignada;
-	private Fecha fechaDeTurno, fechaDeNacimiento;
+	private Fecha fechaDeTurno;
+	private Fecha fechaDeNacimiento;
+	
 	
 	
 	//Constructor para Persona
@@ -100,7 +102,7 @@ public class Persona //implements Comparable<Persona>
 
 	@Override
 	public String toString() {
-		return "" + prioridad;
+		return "" + prioridad + vacunaAsignada + fechaDeTurno;
 	}
 	
 }

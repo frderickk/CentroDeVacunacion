@@ -23,6 +23,14 @@ public abstract class Vacunas {
 		return fecha;
 	}
 
+	public boolean isReservada() {
+		return reservada;
+	}
+
+	public void setReservada(boolean reservada) {
+		this.reservada = reservada;
+	}
+
 	@Override
 	public String toString() {
 		return "Vacuna: " + getNombre() + fecha + "Estoy vencida?" + vencida;

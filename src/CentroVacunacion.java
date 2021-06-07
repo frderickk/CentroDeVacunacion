@@ -11,13 +11,14 @@ public class CentroVacunacion {
 	private int capacidad;
 	private String nombre;
 	private HashMap<Integer, Persona> inscriptos;
-	private HashSet<Persona> listaEspera;
+//	private HashMap<Integer, Persona> listaEspera;
 	private HashMap<Integer, Persona> turno;
     private HashMap<Integer, Persona> vacunados;
     private HashMap<Integer, Vacunas> vacunas; //Stock
     private HeladeraVacunas heladeras;
-	
-
+    
+    private int capaVariable = capacidad;
+    
 	/**
 	* Constructor.
 	* recibe el nombre del centro y la capacidad de vacunaci√≥n diaria.
@@ -28,16 +29,16 @@ public class CentroVacunacion {
 		this.capacidad = capacidadDiaria;
 		this.nombre = nombreVacunatorio;
 		inscriptos = new HashMap<Integer, Persona>();
-		listaEspera = new HashSet<Persona>();
+//		listaEspera = new HashMap<Integer, Persona>();
 		vacunas = new HashMap<Integer, Vacunas>();
 		vacunados = new HashMap<Integer, Persona>();
 		heladeras = new HeladeraVacunas();
+		turno = new HashMap<Integer, Persona>();
 		if(capacidadDiaria < 0) {
 			throw new RuntimeException("El centro no tiene capacidad");
 		}
 	}
 
-	
 	/**
 	* Se inscribe una persona en lista de espera.
 	* Si la persona ya se encuentra inscripta o es menor de 18 a√±os, se debe
@@ -57,11 +58,9 @@ public class CentroVacunacion {
 		 }
 		 else {
 			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
-			 definirPrioridad();
 		 	}
 		 }
 
-	
 	/**
 	* Primero se verifica si hay turnos vencidos. En caso de haber turnos
 	* vencidos, la persona que no asisti√≥ al turno debe ser borrada del sistema
@@ -79,51 +78,121 @@ public class CentroVacunacion {
 	*/
 	//metodo para asginar turno 
 	
-	void generarTurnos(Fecha fechaInicial) {
+	void removerPorfechaValida() {
+		if(turno == null) {
+			throw new RuntimeException("La lista est· vacÌa");}
+		Iterator<Map.Entry<Integer,Persona>> iterator=turno.entrySet().iterator();
+		while (iterator.hasNext()){
+		Map.Entry<Integer,Persona> entry=iterator.next();
+		if(Fecha.hoy().posterior(entry.getValue().getFecha())){
+		heladeras.desasignarVacuna(entry.getValue().getVacunaAsignada()); 
+		iterator.remove();
+		}
+		}	
+	}
+	
+	void asignarTurnos(Fecha fechaInicial) {
+		Fecha f = new Fecha(fechaInicial);
+		if(Fecha.hoy().posterior(fechaInicial)) {
+			throw new RuntimeException("No es una fecha v·lida");
+		}	
+			
+		int cap = capacidad;
+//		obtenerUltimaFechaAsignada(fechaInicial);
+//		capaVariable = capaVariable - cantidadDeTurnosPorDia(fechaInicial);
+		fechaInicial=obtenerUltimaFechaAsignada(fechaInicial);
+		fechaInicial.avanzarUnDia();
+		Iterator<Map.Entry<Integer,Persona>> iterator=inscriptos.entrySet().iterator();
+		while (iterator.hasNext()){
+		Map.Entry<Integer,Persona> entry=iterator.next();
+		if(cap >0 && !entry.getValue().getVacunaAsignada().isEmpty()){
+			entry.getValue().setFecha(fechaInicial);
+			turno.put(entry.getKey(), entry.getValue());
+			iterator.remove();
+		}
+//		else if(cap == 0) {
+//			cap = capacidad;
+////			Fecha f = new Fecha(fechaInicial);
+			
+////			entry.getValue().setFecha(fechaInicial);
+////			turno.put(entry.getKey(), entry.getValue());
+////			iterator.remove();
+//		}	
+		}
 		
+//		fechaInicial.avanzarUnDia();
+	}
+	
+	Fecha obtenerUltimaFechaAsignada(Fecha fech) {
+		if(turno == null) {
+			fech = fech;
+		}
+		
+		else {
+		for (int key : turno.keySet()) {
+			if(turno.get(key).getFecha().posterior(fech)) {
+				fech = turno.get(key).getFecha();
+			}
+		}
+		}
+		return fech;
+	}
+//	
+//	int cantidadDeTurnosPorDia(Fecha fech) {
+//		int turnos = 0;
+//		for (int key : turno.keySet()) {
+//			if(turno.get(key).getFecha().equals(fech)) {
+//				fech = turno.get(key).getFecha();
+//			}
+//		}
+//		return turnos;
+//	}
+//	
+	int inscriptosConVacunaAsignada() {
+		int cant = 0;
+		for (int key : inscriptos.keySet()) {
+			if(!inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+				cant++;
+			}
+		}
+		return cant;
+		
+	}
+	
+	void generarTurnos(Fecha fechaInicial) {
+//		if(vacunasDisponibles() > 0) {
+		removerPorfechaValida();
 		heladeras.vacunaVencida();
 		heladeras.moverVacunas2();
 		heladeras.quitarVacunaVencida();
-		//chequear lista de espera, la primera vez nos da 0.
-		//ver stock general == true sigue si es == false > listadeespera
-		//inscriptos.get(dni).getPrioridad();
-		//asignarVacuna();
-		//verificarCapacidad();
-		//turno (Date)
+		definirPrioridad();
+		while(inscriptosConVacunaAsignada() > 0) {
+			asignarTurnos(fechaInicial);	
+		}
+		
+//		}
 	}
 	
 	public void definirPrioridad() {
 		for (int key : inscriptos.keySet()) {
 			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
-				inscriptos.get(key).setPrioridad('1'); 
+				inscriptos.get(key).setPrioridad('1');
+				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad())); 
 				}
 			else if(inscriptos.get(key).getComorbilidades() == true) {
 					inscriptos.get(key).setPrioridad('2');
+					inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
 				}
 			else if(inscriptos.get(key).edad() > 60) {
 					inscriptos.get(key).setPrioridad('3');
+					inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
 				}
 			else {
 				inscriptos.get(key).setPrioridad('4');
+				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
 				}
 		}
-
 	}
-		
-	
-	void asignarVacuna() {
-//      ver stock individual == true asginar vacuna y sigue, si es false > ponerEnListaDeESpera();
-//		for (Integer iterable_element : iterable) {
-//			
-//		}
-//		if(inscriptos.get(dni).getEdad() < 60) {
-//			System.out.println("P y S");
-//		}
-//		else {
-//			System.out.println("Cualquiera");
-//		}
-	}
-	
 	
 	/**
 	* Devuelve un Diccionario donde
@@ -144,14 +213,13 @@ public class CentroVacunacion {
 	*/
 	//metodo que nos da una lista con los turnos del dia
 	List<Integer> turnosConFecha(Fecha fecha) {
-		return turnosConFecha(fecha);
+		ArrayList<Integer> lista = new ArrayList<>();
+		for (Integer p : turno.keySet()) {
+			lista.add(p);
+		}
+		return lista;
 	}
-	
-	void ponerEnListaEspera() {
-		
-	}
-	
-	
+			
 	/**
 	* Devuelve una lista con los DNI de todos los inscriptos que no se vacunaron
 	* y que no tienen turno asignado.
@@ -161,7 +229,7 @@ public class CentroVacunacion {
 	List <Integer> listaDeEspera() {
 		ArrayList<Integer> lista = new ArrayList<>();
 		for (Integer p : inscriptos.keySet()) {
-			lista.add(listaEspera.hashCode());
+			lista.add(p);
 		}
 		return lista;
 	}
@@ -230,7 +298,7 @@ public class CentroVacunacion {
 	
 	@Override
 	public String toString() {
-		return "" + heladeras;
+		return "" + "Inscriptos" + inscriptos + "Personas con turno" + turno ;
 	}
 	
 	
