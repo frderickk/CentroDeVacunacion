@@ -78,6 +78,7 @@ public class CentroVacunacion {
 	*/
 	//metodo para asginar turno 
 	
+
 	void removerPorfechaValida() {
 		if(turno == null) {
 			throw new RuntimeException("La lista est· vacÌa");}
@@ -159,11 +160,14 @@ public class CentroVacunacion {
 		
 	}
 	
-	void generarTurnos(Fecha fechaInicial) {
+	void generarTurnos1(Fecha fechaInicial) {
 //		if(vacunasDisponibles() > 0) {
-		removerPorfechaValida();
+		removerPorfechaValida();}
+
+	void generarTurnos(Fecha fechaInicial) {
+
 		heladeras.vacunaVencida();
-		heladeras.moverVacunas2();
+		heladeras.moverVacunas();
 		heladeras.quitarVacunaVencida();
 		definirPrioridad();
 		while(inscriptosConVacunaAsignada() > 0) {
@@ -172,6 +176,7 @@ public class CentroVacunacion {
 		
 //		}
 	}
+	
 	
 	public void definirPrioridad() {
 		for (int key : inscriptos.keySet()) {
@@ -189,10 +194,14 @@ public class CentroVacunacion {
 				}
 			else {
 				inscriptos.get(key).setPrioridad('4');
+
 				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
 				}
+
+			}
+
 		}
-	}
+	
 	
 	/**
 	* Devuelve un Diccionario donde
@@ -260,7 +269,7 @@ public class CentroVacunacion {
 	* sumar al stock existente, tomando en cuenta las vacunas ya utilizadas.
 	*/
 	void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
-		heladeras.ingresarVacunas2(nombre, cant, fechaDeEntrada);
+		heladeras.ingresarVacunas(nombre, cant, fechaDeEntrada);
 	}
 	
 	
@@ -285,7 +294,7 @@ public class CentroVacunacion {
 	* total de vacunas disponibles no vencidas sin distinci√≥n por tipo.
 	*/
 	int vacunasDisponibles() {
-		return heladeras.vacunasDisponibles();
+		return heladeras.vacunasDisponibles1();
 	}
 	
 	/**

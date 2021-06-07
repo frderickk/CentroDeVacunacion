@@ -5,6 +5,8 @@ public abstract class Vacunas {
 	protected String nombre;
 	protected boolean vencida;
 	protected boolean reservada;
+	
+	
 	public Vacunas(Fecha fechaIngreso) {
 		this.fecha = fechaIngreso;
 		this.vencida = false;

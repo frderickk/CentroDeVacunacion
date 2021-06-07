@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,54 +6,59 @@ public class HeladeraVacunas {
 	
 	private int codVac;
 	
-	private HashMap<Integer, Vacunas> vacunas2;
+	private HashMap<Integer, Vacunas> vacunas;
 	
-	private HashMap<String, Integer> vacunasVencidas3;
+	private HashMap<String, Integer> vacunasVencidas;
 	
 	
 	public HeladeraVacunas() {
 		
-		vacunas2 = new HashMap<Integer, Vacunas>();
-		
-		vacunasVencidas3 = new HashMap<String, Integer>();
+		vacunas = new HashMap<Integer, Vacunas>();
+		vacunasVencidas = new HashMap<String, Integer>();
 	}
 	
 	
 	public void vacunaVencida() {	
-		for (Integer num : vacunas2.keySet()) {
-
-			if(vacunas2.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas2.get(num).getFecha() ) >=1)) {
-				vacunas2.get(num).setVencida(true);
+		for (Integer num : vacunas.keySet()) {
+			if(vacunas.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha() ) >= 1)) {
+				vacunas.get(num).setVencida(true);
 			}
-			else if(vacunas2.get(num).getNombre() == "Moderna" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas2.get(num).getFecha()) >=2)) {
-				vacunas2.get(num).setVencida(true);
-			}
+			else if(vacunas.get(num).getNombre() == "Moderna" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha()) >= 2)) {
+				vacunas.get(num).setVencida(true);
 			}
 		}
+	}
 		
+
 	public void ingresarVacunas2(String nombre, int cant, Fecha fechaDeEntrada) {
+		
+	}
+
+	
+	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
+
 		if(cant <= 0) {
 		throw new RuntimeException("La cantidad ingresada no puede ser negativa");
 	}
 		for (int i = 0; i < cant; i++) {
 			if (nombre == "AstraZeneca") {
-				vacunas2.put(codVac, new Astra(fechaDeEntrada));
+				vacunas.put(codVac, new Astra(fechaDeEntrada));
 				codVac++;
 			}
 			else if (nombre == "Sputnik") {
-				vacunas2.put(codVac, new Sputnik(fechaDeEntrada));
+				vacunas.put(codVac, new Sputnik(fechaDeEntrada));
 				codVac++;
 			}
 			else if (nombre == "Sinopharm") {
-				vacunas2.put(codVac, new Sino(fechaDeEntrada));
+				vacunas.put(codVac, new Sino(fechaDeEntrada));
 				codVac++;
 			}
 			else if (nombre == "Moderna") {
-				vacunas2.put(codVac,new Moderna(fechaDeEntrada));
+				vacunas.put(codVac,new Moderna(fechaDeEntrada));
 				codVac++;
 			}
 			else if (nombre == "Pfizer") {
-				vacunas2.put(codVac,new Pfizer(fechaDeEntrada));
+				vacunas.put(codVac,new Pfizer(fechaDeEntrada));
 				codVac++;
 			}
 			else {
@@ -62,6 +66,18 @@ public class HeladeraVacunas {
 			}
 		}
 	}
+	
+
+//	public String vacunaDisponible(int edad) {
+//		int cont = 0;
+//		String vacuna = "";
+//		if(vacunasDisponibles("Pfizer") > 0 && cont < 1 && edad > 60) {
+//			vacuna = "Pfizer";
+//			cont++;
+//			asignarVacuna("Pfizer");
+//		}
+//	}
+
 	
 	public String vacunaDisponible(int edad) {
 		int cont = 0;
@@ -95,6 +111,7 @@ public class HeladeraVacunas {
 		return vacuna;		
 	}
 	
+
 //	public int vacunasDisponibles() {		
 //		int contVacunasDisponibles = 0;
 //		Iterator<Integer> it =  vacunas2.keySet().iterator();
@@ -105,20 +122,23 @@ public class HeladeraVacunas {
 //		}
 //		return contVacunasDisponibles;
 //	}
+
+
 	
 	public int vacunasDisponibles(String nombre) {
 		int contVacunasDisponibles = 0;
-		for (Integer num : vacunas2.keySet()) {
-		if (vacunas2.get(num).getNombre() == nombre)
-			contVacunasDisponibles ++;		
+		for (Integer num : vacunas.keySet()) {
+			if (vacunas.get(num).getNombre() == nombre) {
+			contVacunasDisponibles ++;	
+			}
 		}
 		return contVacunasDisponibles;
 	}
 	
-	public int vacunasDisponibles() {
+	public int vacunasDisponibles1() {
 		int contVacunasDisponibles = 0;
-		for (Integer num : vacunas2.keySet()) {
-		if (vacunas2.get(num).isReservada() == false)
+		for (Integer num : vacunas.keySet()) {
+		if (vacunas.get(num).isReservada() == false)
 			contVacunasDisponibles ++;		
 		}
 		return contVacunasDisponibles;
@@ -132,11 +152,12 @@ public class HeladeraVacunas {
 //			}
 //	}
 	
+
 	public void asignarVacuna(String nombre) {
 		int cont = 0;
-		for (Integer num : vacunas2.keySet()) {
-			if (vacunas2.get(num).getNombre() == nombre && vacunas2.get(num).isReservada() == false && cont < 1) {
-				vacunas2.get(num).setReservada(true);
+		for (Integer num : vacunas.keySet()) {
+			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == false && cont < 1) {
+				vacunas.get(num).setReservada(true);
 				cont++;
 			}
 			}
@@ -144,40 +165,43 @@ public class HeladeraVacunas {
 	
 	public void desasignarVacuna(String nombre) {
 		int cont = 0;
-		for (Integer num : vacunas2.keySet()) {
-			if(vacunas2.get(num).getNombre() == nombre && vacunas2.get(num).reservada && cont<1) {
-				vacunas2.get(num).setReservada(false);
+		for (Integer num : vacunas.keySet()) {
+			if(vacunas.get(num).getNombre() == nombre && vacunas.get(num).reservada && cont<1) {
+				vacunas.get(num).setReservada(false);
 				cont++;
 			}
 		}
 	}
 	
-	public void moverVacunas2() {
+
+
+	public void moverVacunas() {
+
 		Integer cont = 0;
-		for (Integer num : vacunas2.keySet()) {
-			if(vacunas2.get(num).isVencida() && vacunas2.get(num).getNombre() == "Pfizer") {
+		for (Integer num : vacunas.keySet()) {
+			if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Pfizer") {
 				cont ++;
-				vacunasVencidas3.put("Pfizer",cont);
+				vacunasVencidas.put("Pfizer",cont);
 			}
-			}
+		}
 	}
 	
 	Map<String, Integer> reporteVacunasVencidas() {
-		return vacunasVencidas3;
+		return vacunasVencidas;
 	}
 	
 	public void quitarVacunaVencida() {
-		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas2.entrySet().iterator();
-		while (iterator.hasNext()){
-		Map.Entry<Integer,Vacunas> entry=iterator.next();
-		if(entry.getValue().isVencida()){
-		iterator.remove();
-		}
+		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Integer,Vacunas> entry=iterator.next();
+			if(entry.getValue().isVencida()){
+				iterator.remove();
+			}
 		}	
 	}
 
 	@Override
 	public String toString() {
-		return  "Cantidad de vacunas: " + vacunas2 + "Las vacunas vencidas son " +  vacunasVencidas3;
+		return  "Cantidad de vacunas: " + vacunas + "Las vacunas vencidas son " +  vacunasVencidas;
 	}
 }
