@@ -4,7 +4,7 @@ public class Persona //implements Comparable<Persona>
 	//fecha de vacunacion depende la implementacion
 	private String nombre, apellido;
 	private boolean trabajadorDeSalud, comorbilidades, vacunado;
-	private char prioridad;
+	private String prioridad;
 	private String vacunaAsignada;
 	private Fecha fechaDeTurno;
 	private Fecha fechaDeNacimiento;
@@ -51,14 +51,15 @@ public class Persona //implements Comparable<Persona>
 		this.comorbilidades = comorbilidades;
 	}
 
-	public char getPrioridad() {
+	
+	public String getPrioridad() {
 		return prioridad;
 	}
 
-	public void setPrioridad(char prioridad) {
+	public void setPrioridad(String prioridad) {
 		this.prioridad = prioridad;
 	}
-	
+
 	public String getVacunaAsignada() {
 		return vacunaAsignada;
 	}

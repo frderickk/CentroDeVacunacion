@@ -128,7 +128,7 @@ public class HeladeraVacunas {
 	public int vacunasDisponibles(String nombre) {
 		int contVacunasDisponibles = 0;
 		for (Integer num : vacunas.keySet()) {
-			if (vacunas.get(num).getNombre() == nombre) {
+			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == false) {
 			contVacunasDisponibles ++;	
 			}
 		}
@@ -174,9 +174,8 @@ public class HeladeraVacunas {
 	}
 	
 
-
+//TERMINAR ÉSTE METODO
 	public void moverVacunas() {
-
 		Integer cont = 0;
 		for (Integer num : vacunas.keySet()) {
 			if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Pfizer") {
@@ -196,6 +195,18 @@ public class HeladeraVacunas {
 			Map.Entry<Integer,Vacunas> entry=iterator.next();
 			if(entry.getValue().isVencida()){
 				iterator.remove();
+			}
+		}	
+	}
+	
+	public void quitarVacuna(String nombreVacuna) {
+		int cont = 0;
+		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Integer,Vacunas> entry=iterator.next();
+			if(entry.getValue().getNombre().equals(nombreVacuna) && cont < 1){
+				iterator.remove();
+				cont++;
 			}
 		}	
 	}
