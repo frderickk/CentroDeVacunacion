@@ -3,11 +3,56 @@ public abstract class Vacunas {
 
 	protected Fecha fecha;
 	protected String nombre;
-	protected boolean vencida;
-	protected boolean reservada;
-	protected boolean aplicada;
+	protected boolean vencida, reservada, aplicada;
 	
 	
+	/**
+	* Constructor de Vacunas
+	* Recibe como parametros la fecha de entrada
+	*/
+	public Vacunas(Fecha fechaDeFechaEntrada) {
+		this.fecha = fechaDeFechaEntrada;
+		this.vencida = false;
+		this.reservada = false;
+	}
+	
+	
+	/**
+	 * Getters y setters de vacunas
+	 */
+	public Fecha getFecha() {
+		return fecha;
+	}
+	
+	abstract public String getNombre();
+	
+	public boolean isReservada() {
+		return reservada;
+	}
+
+	public void setReservada(boolean reservada) {
+		this.reservada = reservada;
+	}
+	
+	public boolean isAplicada() {
+		return aplicada;
+	}
+
+	public void setAplicada(boolean aplicada) {
+		this.aplicada = aplicada;
+	}
+	
+	public boolean isVencida() {
+		return vencida;
+	}
+	
+	public void setVencida(boolean vencida) {
+		this.vencida = vencida;
+	}
+	
+	/**
+	 * hashCode y equals de vacunas
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -48,45 +93,8 @@ public abstract class Vacunas {
 		return true;
 	}
 
-	public boolean isAplicada() {
-		return aplicada;
-	}
-
-	public void setAplicada(boolean aplicada) {
-		this.aplicada = aplicada;
-	}
-
-	public Vacunas(Fecha fechaIngreso) {
-		this.fecha = fechaIngreso;
-		this.vencida = false;
-		this.reservada = false;
-	}
-
-	public boolean isVencida() {
-		return vencida;
-	}
-
-	public void setVencida(boolean vencida) {
-		this.vencida = vencida;
-	}
-
-	public Fecha getFecha() {
-		return fecha;
-	}
-
-	public boolean isReservada() {
-		return reservada;
-	}
-
-	public void setReservada(boolean reservada) {
-		this.reservada = reservada;
-	}
-
 	@Override
 	public String toString() {
-		return "Vacuna: " + getNombre() + fecha + "Estoy vencida?" + vencida;
+		return "Vacuna: " + getNombre();
 	}
-
-	abstract public String getNombre();
-	
 }

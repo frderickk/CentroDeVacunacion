@@ -9,15 +9,14 @@ public class Sputnik extends Vacunas {
 	public String getNombre() {
 		return "Sputnik";
 	}
-
-	@Override
-	public String toString() {
-		return "Sputnik: Fecha de ingreso: " + fecha;
-	}
-
+	
 	@Override
 	public Fecha getFecha() {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

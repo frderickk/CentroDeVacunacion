@@ -8,29 +8,26 @@ public class HeladeraVacunas {
 	private HashMap<Integer, Vacunas> vacunas;
 	private HashMap<String, Integer> vacunasVencidas;
 	
+	
+	/**
+	* Constructor de heladera
+	*/
 	public HeladeraVacunas() {
 		vacunas = new HashMap<Integer, Vacunas>();
 		vacunasVencidas = new HashMap<String, Integer>();
 	}
 	
-	//Determina si una vacuna está vencida
-	public void vacunaVencida() {	
-		for (Integer num : vacunas.keySet()) {
-			if(vacunas.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha() ) >= 1)) {
-				vacunas.get(num).setVencida(true);
-			}
-			else if(vacunas.get(num).getNombre() == "Moderna" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha()) >= 2)) {
-				vacunas.get(num).setVencida(true);
-			}
-		}
-	}		
-	
-	//Se ingresan vacunas
-	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
 
+	/**
+	 * Ingresa la vacuna a la heladera y le pasa un codigo para diferenciarlas
+	 * @param nombre de la vacuna
+	 * @param cantidad de vacunas
+	 * @param fecha de entrada a la heladera
+	 */
+	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
 		if(cant <= 0) {
 		throw new RuntimeException("La cantidad ingresada no puede ser negativa");
-	}
+		}
 		for (int i = 0; i < cant; i++) {
 			if (nombre == "AstraZeneca") {
 				vacunas.put(codVac, new Astra(fechaDeEntrada));
@@ -57,9 +54,46 @@ public class HeladeraVacunas {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Muestra la cantidad de vacunas disponibles por tipo en la heladera y verificamos
+	 * que no este reservada para una persona
+	 * @param nombre de la vacuna
+	 * @return cantidad de la vacuna ingresada
+	 */
+	public int vacunasDisponibles(String nombre) {
+		int contVacunasDisponibles = 0;
+		for (Integer num : vacunas.keySet()) {
+			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == false) {
+			contVacunasDisponibles ++;	
+			}
+		}
+		return contVacunasDisponibles;
+	}
+		
+		
+	/**
+	 * Indica la cantidad total de vacunas disponibles en la heladera
+	 * @return cantidad total de vacunas
+	 */
+	public int vacunasDisponibles() {
+		int contVacunasDisponibles = 0;
+		for (Integer num : vacunas.keySet()) {
+		if (vacunas.get(num).isReservada() == false)
+			contVacunasDisponibles ++;		
+		}
+		return contVacunasDisponibles;
+	}
 
-	//Asigna vacunas según disponnibilidad en base a la edad pasada
-	public String vacunaDisponible(int edad) {
+	
+	/**
+	 * Se ingresa la edad, verifica si hay vacunas disponibles por tipo y si se cumple se asigna la vacuna
+	 * con el metodo asignarVacuna()
+	 * @param edad de la persona
+	 * @return vacuna correspondiente
+	 */
+	public String asignarVacunaDisponibles(int edad) {
 		int cont = 0;
 		String vacuna = "";
 		if(vacunasDisponibles("Pfizer") > 0 && cont < 1 && edad > 60) {
@@ -77,7 +111,6 @@ public class HeladeraVacunas {
 			cont++;
 			asignarVacuna("Moderna");
 		}
-		
 		else if(vacunasDisponibles("AstraZeneca") > 0 && cont < 1) {
 			vacuna = "AstraZeneca";
 			cont++;
@@ -91,39 +124,26 @@ public class HeladeraVacunas {
 		return vacuna;		
 	}
 	
-	//Devuelve las vacunas disponibles por nombre
-	public int vacunasDisponibles(String nombre) {
-		int contVacunasDisponibles = 0;
-		for (Integer num : vacunas.keySet()) {
-			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == false) {
-			contVacunasDisponibles ++;	
-			}
-		}
-		return contVacunasDisponibles;
-	}
 	
-	//Devuelve todas las vacunas disponibles
-	public int vacunasDisponibles1() {
-		int contVacunasDisponibles = 0;
-		for (Integer num : vacunas.keySet()) {
-		if (vacunas.get(num).isReservada() == false)
-			contVacunasDisponibles ++;		
-		}
-		return contVacunasDisponibles;
-	}
-	
-    //Setea la vacuna como asignada (reservada)
-	public void asignarVacuna(String nombre) {
+    /**
+     * Setea la vacuna del stock como asignada
+     * @param nombre de la vacuna
+     */
+	private void asignarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
 			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == false && cont < 1) {
 				vacunas.get(num).setReservada(true);
 				cont++;
 			}
-			}
+		}
 	}
 	
-	//Aplica la vacuna según el nombre de vacuna pasado
+	
+	/**
+	 * Setea la vacuna del stock como aplicada
+	 * @param nombre de la vacuna
+	 */
 	public void aplicarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -131,11 +151,32 @@ public class HeladeraVacunas {
 				vacunas.get(num).setAplicada(true);
 				cont++;
 			}
-			}
+		}
 	}
 	
-	//Desasigna vacunas según el nombre dado
-	public void desasignarVacuna(String nombre) {
+	
+	/**
+	 * Elimina la vacuna aplicada a la persona
+	 * @param nombre de la vacuna
+	 */
+	public void quitarVacunaAplicada(String nombre) {
+		Integer cont = 0;
+		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Integer,Vacunas> entry=iterator.next();
+			if(entry.getValue().isAplicada() && cont<1 && entry.getValue().getNombre().equals(nombre)){
+				cont++;
+				iterator.remove();
+			}
+		}	
+	}
+	
+	
+	/**
+	 * Devuelve la vacuna a la heladera de la persona que no asistio al turno
+	 * @param nombre de la vacuna
+	 */
+	public void devolverVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
 			if(vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() && cont<1) {
@@ -146,8 +187,40 @@ public class HeladeraVacunas {
 		}
 	}
 	
-	//Mueve vacunas vencidas
-	public void moverVacunas() {
+	
+	/**
+	 * Verifica si la vacuna esta vencida (solo para Pfizer y Moderna)
+	 */
+	public void verificarVacunaVencida() {	
+		for (Integer num : vacunas.keySet()) {
+			if(vacunas.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha() ) >= 1)) {
+				vacunas.get(num).setVencida(true);
+			}
+			else if(vacunas.get(num).getNombre() == "Moderna" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha()) >= 2)) {
+				vacunas.get(num).setVencida(true);
+			}
+		}
+	}
+		
+		
+	/**
+	 * Si la vacuna estuviera vencida la elimina
+	 */
+	public void quitarVacunaVencida() {
+		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry<Integer,Vacunas> entry=iterator.next();
+			if(entry.getValue().isVencida()){
+				iterator.remove();
+			}
+		}
+	}
+	
+	
+	/**
+	 * Mueve la vacuna vencida a un diccionario que reporta vacunas vencidas
+	 */
+	public void moverVacunasVencidas() {
 		Integer cont = 0;
 		for (Integer num : vacunas.keySet()) {
 			if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Pfizer") {
@@ -160,40 +233,22 @@ public class HeladeraVacunas {
 			}
 		}
 	}
+
 	
-	
-	//Brinda un reporte de las vacunas vencidas
+	/**
+	 * @return Brinda un reporte de la situacion de las vacunas vencidas
+	 */
 	Map<String, Integer> reporteVacunasVencidas() {
 		return vacunasVencidas;
 	}
-	
-	//Quita las cavunas vencidas
-	public void quitarVacunaVencida() {
-		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Map.Entry<Integer,Vacunas> entry=iterator.next();
-			if(entry.getValue().isVencida()){
-				iterator.remove();
-			}
-		}	
-	}
-	
-	//Quita la vacuna por el nombre pasado
-	
-	public void quitarVacuna(String nombre) {
-		Integer cont = 0;
-		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Map.Entry<Integer,Vacunas> entry=iterator.next();
-			if(entry.getValue().isAplicada() && cont<1 && entry.getValue().getNombre().equals(nombre)){
-				cont++;
-				iterator.remove();
-			}
-		}	
-	}
 
+	
 	@Override
 	public String toString() {
-		return  "Cantidad de vacunas: " + vacunas + "Las vacunas vencidas son " +  vacunasVencidas;
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n\n                      --------------Heladeras------------ \n\n");
+		sb.append("                             Vacunas Disponibles: "+ vacunasDisponibles() +"\n\n");
+		sb.append("                             Vacunas Vencidas: "+ vacunasVencidas.size() + "\n\n");
+		return sb.toString();	
 	}
 }

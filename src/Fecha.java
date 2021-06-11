@@ -67,6 +67,14 @@ public class Fecha implements Comparable<Fecha> {
 		Period periodo = fNacimiento.fecha.until(hoy.fecha);
 		return periodo.getYears();
 	}
+	
+	/**
+	 * Metodo creado para calcular el vencimiento de las vacunas Pfizer y Moderna
+	 */
+	public static int diferenciaMes(Fecha hoy, Fecha fNacimiento) {
+		Period periodo = fNacimiento.fecha.until(hoy.fecha);
+		return periodo.getMonths();
+	}
 
 	public void avanzarUnDia() {
 		fecha = fecha.plusDays(1);
@@ -110,12 +118,4 @@ public class Fecha implements Comparable<Fecha> {
 	public String toString() {
 		return "" + dia() + "/" + mes() + "/" + anio();
 	}
-
-	public static int diferenciaMes(Fecha hoy, Fecha fNacimiento) {
-		Period periodo = fNacimiento.fecha.until(hoy.fecha);
-		return periodo.getMonths();
-	}
-	
-	
-
 }

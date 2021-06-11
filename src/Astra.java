@@ -6,19 +6,17 @@ public class Astra extends Vacunas {
 	}
 
 	@Override
-	public String toString() {
-		return "Astra: Fecha de ingreso: " + fecha;
-	}
-
-	@Override
 	public String getNombre() {
 		return "AstraZeneca";
 	}
-
 
 	@Override
 	public Fecha getFecha() {
 		return null;
 	}
-	
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

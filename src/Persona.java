@@ -1,29 +1,53 @@
 
-public class Persona //implements Comparable<Persona> 
-{
-	//fecha de vacunacion depende la implementacion
-	private boolean trabajadorDeSalud, comorbilidades, vacunado;
-	private String prioridad;
-	private String vacunaAsignada;
-	private Fecha fechaDeTurno;
-	private Fecha fechaDeNacimiento;
+public class Persona {
+	
 	private int dni;
-
-	//Constructor para Persona
-	public Persona(int dni, Fecha fecha2, Boolean salud, Boolean comorbilidad) {
-		this.fechaDeNacimiento = fecha2;
-		this.trabajadorDeSalud = salud;
+	private Fecha fechaDeNacimiento, fechaDeTurno;
+	private boolean trabajadorDeSalud, comorbilidades, vacunado;
+	private String prioridad, vacunaAsignada;
+	
+	/**
+	* Constructor de persona
+	* Recibe como parametros el DNI, la fecha de nacimiento
+	* si es trabajador de salud y si tiene comorbilidades
+	*/
+	public Persona(int dni, Fecha fechaDeNacimiento, Boolean trabajadorDeSalud, Boolean comorbilidad) {
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		this.trabajadorDeSalud = trabajadorDeSalud;
 		this.comorbilidades = comorbilidad;
 		this.dni = dni;
 	}
+	
+	
+	/**
+	 * Getters y setters de Persona
+	 */
+	public int getDni() {
+		return dni;
+	}
 
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
+
+	
+	/**
+	 * Calculamos la edad en base a la fecha de nacimiento y la diferencia con la fecha actual
+	 */
 	public int edad() {
 		return  Fecha.diferenciaAnios(Fecha.hoy(), fechaDeNacimiento);
-		
 	}
 
 	public void setFechaDeNacimiento(Fecha fechaDeNacimiento) {
 		this.fechaDeNacimiento = fechaDeNacimiento;
+	}
+	
+	public Fecha getFecha() {
+		return fechaDeTurno;
+	}
+
+	public void setFecha(Fecha fecha) {
+		this.fechaDeTurno = fecha;
 	}
 
 	public boolean isVacunado() {
@@ -50,7 +74,26 @@ public class Persona //implements Comparable<Persona>
 		this.comorbilidades = comorbilidades;
 	}
 
+	public String getPrioridad() {
+		return prioridad;
+	}
+
+	public void setPrioridad(String prioridad) {
+		this.prioridad = prioridad;
+	}
+
+	public String getVacunaAsignada() {
+		return vacunaAsignada;
+	}
+
+	public void setVacunaAsignada(String vacunaAsignada) {
+		this.vacunaAsignada = vacunaAsignada;
+	}
 	
+	
+	/**
+	 * hashCode y equals de Persona verificando con el numero de DNI
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -73,66 +116,8 @@ public class Persona //implements Comparable<Persona>
 		return true;
 	}
 
-	public String getPrioridad() {
-		return prioridad;
-	}
-
-	public void setPrioridad(String prioridad) {
-		this.prioridad = prioridad;
-	}
-
-	public String getVacunaAsignada() {
-		return vacunaAsignada;
-	}
-
-	public void setVacunaAsignada(String vacunaAsignada) {
-		this.vacunaAsignada = vacunaAsignada;
-	}
-	
-	public Fecha getFecha() {
-		return fechaDeTurno;
-	}
-
-	public void setFecha(Fecha fecha) {
-		this.fechaDeTurno = fecha;
-	}
-	
-	public int getDni() {
-		return dni;
-	}
-
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
-	
-//	boolean esMenorDe60() {
-//		if (this.fechaDeNacimiento < 60) {
-//			return true;
-//		}
-//		return false;
-//	}
-	
-//	void asignarVacuna(Integer dni) {
-//		if(esMenorDe60()) {
-//			System.out.println("Pfizer o Sputnik");
-//		}
-//		else {
-//			System.out.println("Cualquiera");
-//		}
-//	}
-	
-//	Vacunas verVacunaAsignada() {
-//		return vacunaAsignada.get(dni);
-//	}
-	
-//	public int compareTo(Persona o) {
-//		return o.getDni()-this.getDni();
-//	}
-
-
 	@Override
 	public String toString() {
-		return "" + prioridad + vacunaAsignada + fechaDeTurno;
+		return "Persona []";
 	}
-	
 }
