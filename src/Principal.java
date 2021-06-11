@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+
 
 public class Principal {
 
@@ -14,9 +14,8 @@ public class Principal {
 
 //		centro.ingresarVacunas("Pfizer", 2, new Fecha(15,6,2021));
 //
-		centro.ingresarVacunas("Pfizer", 50, new Fecha(15,7,2021));
-		centro.ingresarVacunas("Moderna", 20, new Fecha(1,8,2021));
-		centro.ingresarVacunas("Sputnik", 50, new Fecha(15,10,2021));
+		centro.ingresarVacunas("Sputnik", 10, new Fecha(20,7,2021));
+		centro.ingresarVacunas("AstraZeneca", 10, new Fecha(20,7,2021));
 		
 //		System.out.println(centro.vacunasDisponibles());
 //		System.out.println(centro.vacunasDisponibles("Pfizer"));
@@ -44,7 +43,11 @@ public class Principal {
 		centro.inscribirPersona(14000000, new Fecha(1, 1, 1961), false, false);  // 60 NS NP 2
 		centro.inscribirPersona(14005000, new Fecha(20, 12, 1961), true, false);
 		
-		System.out.println(centro.compararKeys(14000000));
+		Fecha fecha = new Fecha(30,6,2021);
+		
+		System.out.println(centro.vacunasDisponibles());
+		
+//		System.out.println(centro.compararKeys(14000000));
 		
 //		centro.inscribirPersona(34701001, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
 //		centro.inscribirPersona(29959001, new Fecha(20, 11, 1982), false, true);
@@ -54,13 +57,24 @@ public class Principal {
 //		centro.inscribirPersona(13000051, new Fecha(20, 6, 1958), false, false); //mayor
 //		centro.inscribirPersona(13000052, new Fecha(20, 6, 1958), false, false); //mayor
 		
-		System.out.println(centro.vacunasDisponibles());
-					
-		centro.generarTurnos(fTurnos);
+//		System.out.println(centro.vacunasDisponibles());
+		System.out.println(centro);
+		centro.generarTurnos(fecha);
 			
-		centro.vacunarInscripto(14000000, new Fecha(new Fecha(15, 7, 2021)));
+		System.out.println(centro.vacunasDisponibles());
 		
-		System.out.println(centro.compararKeys2(14000000));
+		centro.vacunarInscripto(14000000, fecha);
+		
+		System.out.println(centro);
+		
+		System.out.println(centro.vacunasDisponibles());
+		
+		Fecha.setFechaHoy(2,7,2021);
+		centro.generarTurnos(new Fecha(5,7,2021));
+		
+		System.out.println(centro.vacunasDisponibles());
+		
+//		System.out.println(centro.compararKeys2(14000000));
 //		System.out.println(centro.turnosConFecha(new Fecha(15, 7, 2021)).size());
 		
 //		centro.generarTurnos(new Fecha(fTurnos));

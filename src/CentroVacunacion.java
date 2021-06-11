@@ -340,8 +340,9 @@ public class CentroVacunacion {
 			}
 			else  
 				{
+					heladeras.aplicarVacuna(turno.get(dni).getVacunaAsignada());
 					vacunados.put(dni,turno.get(dni).getVacunaAsignada());
-					heladeras.quitarVacuna(turno.get(dni).getVacunaAsignada());
+					heladeras.quitarVacuna();
 				}
 			}
 			}
@@ -411,7 +412,7 @@ public class CentroVacunacion {
 	
 	@Override
 	public String toString() {
-		return "" + "Inscriptos" + inscriptos + "Personas con turno" + turno ;
+		return "" + "Inscriptos" + heladeras + "Personas con turno" + turno ;
 	}
 	
 	

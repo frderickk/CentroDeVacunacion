@@ -5,8 +5,17 @@ public abstract class Vacunas {
 	protected String nombre;
 	protected boolean vencida;
 	protected boolean reservada;
+	protected boolean aplicada;
 	
 	
+	public boolean isAplicada() {
+		return aplicada;
+	}
+
+	public void setAplicada(boolean aplicada) {
+		this.aplicada = aplicada;
+	}
+
 	public Vacunas(Fecha fechaIngreso) {
 		this.fecha = fechaIngreso;
 		this.vencida = false;

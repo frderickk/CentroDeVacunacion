@@ -163,18 +163,27 @@ public class HeladeraVacunas {
 			}
 	}
 	
+	public void aplicarVacuna(String nombre) {
+		int cont = 0;
+		for (Integer num : vacunas.keySet()) {
+			if (vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() == true && vacunas.get(num).isAplicada() == false && cont < 1) {
+				vacunas.get(num).setAplicada(true);
+				cont++;
+			}
+			}
+	}
+	
 	public void desasignarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
 			if(vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() && cont<1) {
 				vacunas.get(num).setReservada(false);
+				vacunas.get(num).setAplicada(false);
 				cont++;
 			}
 		}
 	}
 	
-
-//TERMINAR ÉSTE METODO
 	public void moverVacunas() {
 		Integer cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -182,26 +191,12 @@ public class HeladeraVacunas {
 				cont ++;
 				vacunasVencidas.put("Pfizer",cont);
 			}
-			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Sputnik") {
-				cont ++;
-				vacunasVencidas.put("Sputnik",cont);
-			}
-			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Sinopharm") {
-				cont ++;
-				vacunasVencidas.put("Sinopharm",cont);
-			}
 			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Moderna") {
 				cont ++;
 				vacunasVencidas.put("Moderna",cont);
 			}
-			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "AstraZeneca") {
-				cont ++;
-				vacunasVencidas.put("AstraZeneca",cont);
-			}
 		}
 	}
-	
-	
 	
 	Map<String, Integer> reporteVacunasVencidas() {
 		return vacunasVencidas;
@@ -217,14 +212,14 @@ public class HeladeraVacunas {
 		}	
 	}
 	
-	public void quitarVacuna(String nombreVacuna) {
-		int cont = 0;
+	public void quitarVacuna() {
+		Integer cont = 0;
 		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<Integer,Vacunas> entry=iterator.next();
-			if(entry.getValue().getNombre().equals(nombreVacuna) && cont < 1){
-				iterator.remove();
+			if( entry.getValue().isAplicada() && cont < 1 ){
 				cont++;
+				iterator.remove();
 			}
 		}	
 	}
