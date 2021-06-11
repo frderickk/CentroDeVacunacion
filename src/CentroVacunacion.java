@@ -10,8 +10,11 @@ public class CentroVacunacion {
 	
 	private int capacidad;
 	private String nombre;
+	
+//	private Map<Integer, ArrayList<Persona>> listaInscriptos; // se uso
+//	private Map<Integer, ArrayList<Persona>> turnos;
+	
 	private HashMap<Integer, Persona> inscriptos;
-//	private HashMap<Integer, Persona> listaEspera;
 	private HashMap<Integer, Persona> turno;
     private HashMap<Integer, String> vacunados;
     private HashMap<Integer, Vacunas> vacunas; //Stock
@@ -29,7 +32,6 @@ public class CentroVacunacion {
 		this.capacidad = capacidadDiaria;
 		this.nombre = nombreVacunatorio;
 		inscriptos = new HashMap<Integer, Persona>();
-//		listaEspera = new HashMap<Integer, Persona>();
 		vacunas = new HashMap<Integer, Vacunas>();
 		vacunados = new HashMap<Integer, String>();
 		heladeras = new HeladeraVacunas();
@@ -89,7 +91,6 @@ public class CentroVacunacion {
 		}
 	}
 	
-	
 	void removerPorfechaInvalida() {	
 		Iterator<Map.Entry<Integer,Persona>> iterator=turno.entrySet().iterator();
 		while (iterator.hasNext()){
@@ -101,13 +102,36 @@ public class CentroVacunacion {
 		}	
 	}
 	
-
-	
 	//recibe fecha, chequea si es válida o no. 
 	//chquear si la fecha que le paso es posterior a la fecha de hoy
 	//chequear si tengo capacidad para esa fecha
 	//si es posterior a hoy y no tengo capacidad, avanzo un día
 	//si es posterior a hoy, y tengo capacidad, doy turno para ese día, sólo la capacidad que me quede	
+	
+//	void asignarTurnos(Fecha fechaInicial) {
+//		Fecha f = new Fecha(fechaInicial);
+//		int cap = this.capacidad;
+//		f = obtenerUltimaFecha(f);
+//		chequearFecha(f);		
+//		for (int key : inscriptos.keySet()) {
+//			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+//				inscriptos.get(key).setFecha(f);
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2" && !inscriptos.get(key).getVacunaAsignada().isEmpty() && personasConPrioridad("1")==0) {
+//				inscriptos.get(key).setFecha(f);
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "3" && !inscriptos.get(key).getVacunaAsignada().isEmpty()&& personasConPrioridad("1")==0 && personasConPrioridad("2")==0) {
+//				inscriptos.get(key).setFecha(f);
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4" && !inscriptos.get(key).getVacunaAsignada().isEmpty() && personasConPrioridad("1")==0 && personasConPrioridad("2")==0 && personasConPrioridad("3")==0) {	
+//				inscriptos.get(key).setFecha(f);
+//				cap--;
+//			}	
+//		}
+//	}	
 	
 	void asignarTurnos(Fecha fechaInicial) {
 		Fecha f = new Fecha(fechaInicial);
@@ -119,7 +143,7 @@ public class CentroVacunacion {
 				inscriptos.get(key).setFecha(f);
 				cap--;
 			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2" && !inscriptos.get(key).getVacunaAsignada().isEmpty() ) {
 				inscriptos.get(key).setFecha(f);
 				cap--;
 			}
@@ -127,11 +151,24 @@ public class CentroVacunacion {
 				inscriptos.get(key).setFecha(f);
 				cap--;
 			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {	
+			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4" && !inscriptos.get(key).getVacunaAsignada().isEmpty() ) {	
 				inscriptos.get(key).setFecha(f);
 				cap--;
 			}	
 		}
+	}
+	
+	int personasConPrioridad(String prioridad) {
+		int cant = 0;
+		Iterator<Map.Entry<Integer,Persona>> iterator=inscriptos.entrySet().iterator();
+		while (iterator.hasNext()){
+		Map.Entry<Integer,Persona> entry=iterator.next();
+		if(entry.getValue().getPrioridad().equals(prioridad)){
+			cant++;
+			}
+		}
+		return capaVariable;
+		
 	}
 	
 	void moverConTurnoAsignado() {
@@ -194,10 +231,6 @@ public class CentroVacunacion {
 		return cant;	
 	}
 	
-	void generarTurnos1(Fecha fechaInicial) {
-//		if(vacunasDisponibles() > 0) {
-		removerPorfechaInvalida();}
-//}	
 
 //	public void definirPrioridad() {
 //		definirPrioridad(1);
@@ -205,27 +238,27 @@ public class CentroVacunacion {
 //		definirPrioridad(3);
 //		definirPrioridad(4);
 //	}
-	
-	public void definirPrioridad() {
-		for (int key : inscriptos.keySet()) {
-			if(inscriptos.get(key).getTrabajadorDeSalud() == true   ) {
-				inscriptos.get(key).setPrioridad("1");
-				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad())); 
-				}
-			else if(inscriptos.get(key).getComorbilidades() == true  ) {
-					inscriptos.get(key).setPrioridad("2");
-					inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
-				}
-			else if(inscriptos.get(key).edad() > 60  ) {
-					inscriptos.get(key).setPrioridad("3");
-					inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
-				}
-			else {
-				inscriptos.get(key).setPrioridad("4");
+		
+public void definirPrioridad() {
+	for (int key : inscriptos.keySet()) {
+		if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
+			inscriptos.get(key).setPrioridad("1");
+			inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad())); 
+			}
+		else if(inscriptos.get(key).getComorbilidades() == true  ) {
+				inscriptos.get(key).setPrioridad("2");
 				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
-				}
+			}
+		else if(inscriptos.get(key).edad() > 60  ) {
+				inscriptos.get(key).setPrioridad("3");
+				inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
+			}
+		else {
+			inscriptos.get(key).setPrioridad("4");
+			inscriptos.get(key).setVacunaAsignada(heladeras.vacunaDisponible(inscriptos.get(key).edad()));
 			}
 		}
+	}
 	
 	boolean comparar(char a, char b) {
 		return a == b;
@@ -307,31 +340,11 @@ public class CentroVacunacion {
 		return t;
 	}
 	
-//	void vacunarInscripto(int dni, Fecha fechaVacunacion) { 
-//		  for (Persona key : turno.values()) {
-//		   if(!turno.containsKey(key.hashCode())) {
-//		    throw new RuntimeException("No esta inscripto");
-//		   }
-//		   if(!turno.get(key.hashCode()).getFecha().equals(fechaVacunacion)) {
-//		    throw new RuntimeException("La fecha de vacunacion no corresponde con el dia de hoy");
-//		   }
-//		   if(key.hashCode() == dni && turno.get(key.hashCode()).getFecha().equals(fechaVacunacion) ) {
-//		    vacunados.put(dni,turno.get(key.hashCode()).getVacunaAsignada());
-//		    heladeras.quitarVacuna(turno.get(key.hashCode()).getVacunaAsignada());
-//		   }
-//		   else {
-//		    throw new RuntimeException("hola");
-//		   }
-//		  }
-//	}
-	
 	void vacunarInscripto(Integer dni, Fecha fechaVacunacion) {	
 		vacunarInscripto2( dni,  fechaVacunacion);
 	}
 	
 	void vacunarInscripto2(Integer dni, Fecha fechaVacunacion) {	
-		for (Integer key : turno.keySet()) {
-			//NO ENTRA
 			if(turno.get(dni) == null) {
 				throw new RuntimeException("No está inscripto");
 			}	
@@ -342,28 +355,9 @@ public class CentroVacunacion {
 				{
 					heladeras.aplicarVacuna(turno.get(dni).getVacunaAsignada());
 					vacunados.put(dni,turno.get(dni).getVacunaAsignada());
-					heladeras.quitarVacuna();
+					heladeras.quitarVacuna(turno.get(dni).getVacunaAsignada());
 				}
 			}
-			}
-//			else if(!turno.get(dni).getFecha().equals(fechaVacunacion)) {
-//				throw new RuntimeException("La fecha de vacunación no corresponde con el día de hoy");
-//			}
-//			else if(compararKeys2(dni) == true && turno.get(dni).getFecha().equals(fechaVacunacion) ) 
-//			{
-//				vacunados.put(dni,turno.get(dni).getVacunaAsignada());
-//				heladeras.quitarVacuna(turno.get(dni).getVacunaAsignada());
-//			}
-//		}
-//	}
-		
-//		
-//		//leer lista "turno"
-//		//verificar que se haya presentado
-//		//Si se presentï¿½,cambiar el boolean a vacunado
-//		//Sino, lo sacamos del sistema y se devuelve la vacuna al stock
-//	}
-	
 	
 	/**
 	* Solo se pueden ingresar los tipos de vacunas planteados en la 1ra parte.
@@ -412,7 +406,7 @@ public class CentroVacunacion {
 	
 	@Override
 	public String toString() {
-		return "" + "Inscriptos" + heladeras + "Personas con turno" + turno ;
+		return "" + "Inscriptos" + inscriptos + "Personas con turno" + turno ;
 	}
 	
 	

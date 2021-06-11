@@ -4,7 +4,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		Fecha fTurnos = new Fecha(15, 7, 2021);
-		CentroVacunacion centro = new CentroVacunacion("UNGS", 5);
+		CentroVacunacion centro = new CentroVacunacion("UNGS", 2);
 
 //		System.out.println("------------ Creacion -------------");
 //		System.out.println(centro);
@@ -35,7 +35,7 @@ public class Principal {
 		
 		
 		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false);  // 32 NS NP 4
-		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true); // 38 S  NP 1
+		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), true, true); // 38 S  NP 1
 		centro.inscribirPersona(24780201, new Fecha(1, 6, 1972), true, false);   // 49 NS P  3
 		centro.inscribirPersona(29223000, new Fecha(2, 5, 1982), false, true);   // 39 S  NP 1
 		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false);   // 63 NS P  2
@@ -63,7 +63,7 @@ public class Principal {
 			
 		System.out.println(centro.vacunasDisponibles());
 		
-		centro.vacunarInscripto(14000000, fecha);
+//		centro.vacunarInscripto(14000000, fecha);
 		
 		System.out.println(centro);
 		

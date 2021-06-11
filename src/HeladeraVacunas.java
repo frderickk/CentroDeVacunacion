@@ -5,19 +5,15 @@ import java.util.Map;
 public class HeladeraVacunas {
 	
 	private int codVac;
-	
 	private HashMap<Integer, Vacunas> vacunas;
-	
 	private HashMap<String, Integer> vacunasVencidas;
 	
-	
 	public HeladeraVacunas() {
-		
 		vacunas = new HashMap<Integer, Vacunas>();
 		vacunasVencidas = new HashMap<String, Integer>();
 	}
 	
-	
+	//Determina si una vacuna está vencida
 	public void vacunaVencida() {	
 		for (Integer num : vacunas.keySet()) {
 			if(vacunas.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha() ) >= 1)) {
@@ -27,14 +23,9 @@ public class HeladeraVacunas {
 				vacunas.get(num).setVencida(true);
 			}
 		}
-	}
-		
-
-	public void ingresarVacunas2(String nombre, int cant, Fecha fechaDeEntrada) {
-		
-	}
-
+	}		
 	
+	//Se ingresan vacunas
 	public void ingresarVacunas(String nombre, int cant, Fecha fechaDeEntrada) {
 
 		if(cant <= 0) {
@@ -66,19 +57,8 @@ public class HeladeraVacunas {
 			}
 		}
 	}
-	
 
-//	public String vacunaDisponible(int edad) {
-//		int cont = 0;
-//		String vacuna = "";
-//		if(vacunasDisponibles("Pfizer") > 0 && cont < 1 && edad > 60) {
-//			vacuna = "Pfizer";
-//			cont++;
-//			asignarVacuna("Pfizer");
-//		}
-//	}
-
-	
+	//Asigna vacunas según disponnibilidad en base a la edad pasada
 	public String vacunaDisponible(int edad) {
 		int cont = 0;
 		String vacuna = "";
@@ -111,20 +91,7 @@ public class HeladeraVacunas {
 		return vacuna;		
 	}
 	
-
-//	public int vacunasDisponibles() {		
-//		int contVacunasDisponibles = 0;
-//		Iterator<Integer> it =  vacunas2.keySet().iterator();
-//		while(it.hasNext()) {
-//			Integer key = (Integer) it.next();
-//		if(vacunas2.containsKey(key) && vacunas2.containsValue(value))
-//			contVacunasDisponibles ++;
-//		}
-//		return contVacunasDisponibles;
-//	}
-
-
-	
+	//Devuelve las vacunas disponibles por nombre
 	public int vacunasDisponibles(String nombre) {
 		int contVacunasDisponibles = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -135,6 +102,7 @@ public class HeladeraVacunas {
 		return contVacunasDisponibles;
 	}
 	
+	//Devuelve todas las vacunas disponibles
 	public int vacunasDisponibles1() {
 		int contVacunasDisponibles = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -144,15 +112,7 @@ public class HeladeraVacunas {
 		return contVacunasDisponibles;
 	}
 	
-//	public void moverVacunas() {
-//		for (Integer num : vacunas2.keySet()) {
-//			if(vacunas2.get(num).isVencida()) {
-//				vacunasVencidas2.put(num,vacunas2.get(num));
-//			}
-//			}
-//	}
-	
-
+    //Setea la vacuna como asignada (reservada)
 	public void asignarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -163,6 +123,7 @@ public class HeladeraVacunas {
 			}
 	}
 	
+	//Aplica la vacuna según el nombre de vacuna pasado
 	public void aplicarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -173,6 +134,7 @@ public class HeladeraVacunas {
 			}
 	}
 	
+	//Desasigna vacunas según el nombre dado
 	public void desasignarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -184,6 +146,7 @@ public class HeladeraVacunas {
 		}
 	}
 	
+	//Mueve vacunas vencidas
 	public void moverVacunas() {
 		Integer cont = 0;
 		for (Integer num : vacunas.keySet()) {
@@ -198,10 +161,13 @@ public class HeladeraVacunas {
 		}
 	}
 	
+	
+	//Brinda un reporte de las vacunas vencidas
 	Map<String, Integer> reporteVacunasVencidas() {
 		return vacunasVencidas;
 	}
 	
+	//Quita las cavunas vencidas
 	public void quitarVacunaVencida() {
 		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -212,12 +178,14 @@ public class HeladeraVacunas {
 		}	
 	}
 	
-	public void quitarVacuna() {
+	//Quita la vacuna por el nombre pasado
+	
+	public void quitarVacuna(String nombre) {
 		Integer cont = 0;
 		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<Integer,Vacunas> entry=iterator.next();
-			if( entry.getValue().isAplicada() && cont < 1 ){
+			if(entry.getValue().isAplicada() && cont<1 && entry.getValue().getNombre().equals(nombre)){
 				cont++;
 				iterator.remove();
 			}

@@ -2,7 +2,6 @@
 public class Persona //implements Comparable<Persona> 
 {
 	//fecha de vacunacion depende la implementacion
-	private String nombre, apellido;
 	private boolean trabajadorDeSalud, comorbilidades, vacunado;
 	private String prioridad;
 	private String vacunaAsignada;
