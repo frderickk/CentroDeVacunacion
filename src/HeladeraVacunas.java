@@ -166,7 +166,7 @@ public class HeladeraVacunas {
 	public void desasignarVacuna(String nombre) {
 		int cont = 0;
 		for (Integer num : vacunas.keySet()) {
-			if(vacunas.get(num).getNombre() == nombre && vacunas.get(num).reservada && cont<1) {
+			if(vacunas.get(num).getNombre() == nombre && vacunas.get(num).isReservada() && cont<1) {
 				vacunas.get(num).setReservada(false);
 				cont++;
 			}
@@ -182,8 +182,26 @@ public class HeladeraVacunas {
 				cont ++;
 				vacunasVencidas.put("Pfizer",cont);
 			}
+			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Sputnik") {
+				cont ++;
+				vacunasVencidas.put("Sputnik",cont);
+			}
+			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Sinopharm") {
+				cont ++;
+				vacunasVencidas.put("Sinopharm",cont);
+			}
+			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Moderna") {
+				cont ++;
+				vacunasVencidas.put("Moderna",cont);
+			}
+			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "AstraZeneca") {
+				cont ++;
+				vacunasVencidas.put("AstraZeneca",cont);
+			}
 		}
 	}
+	
+	
 	
 	Map<String, Integer> reporteVacunasVencidas() {
 		return vacunasVencidas;

@@ -57,7 +57,7 @@ public class CentroVacunacion {
 			 throw new RuntimeException("Esta persona ya ha sido vacunada");
 		 }
 		 else {
-			 inscriptos.put(dni, new Persona(fechaDeNacimiento, salud, comorbilidad));
+			 inscriptos.put(dni, new Persona(dni, fechaDeNacimiento, salud, comorbilidad));
 		 	}
 		 }
 
@@ -110,10 +110,10 @@ public class CentroVacunacion {
 	//si es posterior a hoy, y tengo capacidad, doy turno para ese día, sólo la capacidad que me quede	
 	
 	void asignarTurnos(Fecha fechaInicial) {
-		int cap = this.capacidad;
-		fechaInicial = obtenerUltimaFecha(fechaInicial);
-		chequearFecha(fechaInicial);
 		Fecha f = new Fecha(fechaInicial);
+		int cap = this.capacidad;
+		f = obtenerUltimaFecha(f);
+		chequearFecha(f);		
 		for (int key : inscriptos.keySet()) {
 			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {
 				inscriptos.get(key).setFecha(f);
@@ -160,7 +160,7 @@ public class CentroVacunacion {
 		if(Fecha.hoy().posterior(fech)) {
 			throw new RuntimeException("No es una fecha válida");
 		}
-		if(cantidadDeTurnosPorDia(fech) == this.capacidad) 
+		if(cantidadDeTurnosPorDia(fech) == this.capacidad) 		
 			fech.avanzarUnDia();	
 		return new Fecha(fech);
 	}
@@ -242,7 +242,7 @@ public class CentroVacunacion {
 	*/
 	//metodo que nos da una lista de vacunados
 	Map<Integer, String> reporteVacunacion() {
-		return reporteVacunacion();
+		return vacunados;
 	}
 	
 	
@@ -254,9 +254,10 @@ public class CentroVacunacion {
 	*/
 	//metodo que nos da una lista con los turnos del dia
 	List<Integer> turnosConFecha(Fecha fecha) {
+		Fecha f = new Fecha(fecha);
 		ArrayList<Integer> lista = new ArrayList<>();
 		for (Integer p : turno.keySet()) {
-			if(turno.get(p).getFecha().equals(fecha))
+			if(turno.get(p).getFecha().equals(f))
 			lista.add(p);
 		}
 		return lista;
@@ -285,26 +286,82 @@ public class CentroVacunacion {
 	* - Si no estÃ¡ inscripto o no tiene turno ese dÃ­a, se genera una Excepcion.
 	*/
 	//si se presenta, se cambia el boolean a vacunado
-	void vacunarInscripto(Integer dni, Fecha fechaVacunacion) {	
-		for (int key : turno.keySet()) {
-			if(!turno.containsKey(key)) {
-				throw new RuntimeException("No está inscripto");
+	
+	boolean compararKeys(int dni) {
+		boolean t = false;
+		for (int key : inscriptos.keySet()) {
+			if(inscriptos.containsKey(dni)) {
+				t = true;
 			}
-			if(!turno.get(key).getFecha().equals(fechaVacunacion)) {
+		}
+		return t;
+	}
+	
+	boolean compararKeys2(int dni) {
+		boolean t = false;
+		for (Integer key : turno.keySet()) {		
+			if(key.hashCode() == dni) {
+				t = true;
+			}
+		}
+		return t;
+	}
+	
+//	void vacunarInscripto(int dni, Fecha fechaVacunacion) { 
+//		  for (Persona key : turno.values()) {
+//		   if(!turno.containsKey(key.hashCode())) {
+//		    throw new RuntimeException("No esta inscripto");
+//		   }
+//		   if(!turno.get(key.hashCode()).getFecha().equals(fechaVacunacion)) {
+//		    throw new RuntimeException("La fecha de vacunacion no corresponde con el dia de hoy");
+//		   }
+//		   if(key.hashCode() == dni && turno.get(key.hashCode()).getFecha().equals(fechaVacunacion) ) {
+//		    vacunados.put(dni,turno.get(key.hashCode()).getVacunaAsignada());
+//		    heladeras.quitarVacuna(turno.get(key.hashCode()).getVacunaAsignada());
+//		   }
+//		   else {
+//		    throw new RuntimeException("hola");
+//		   }
+//		  }
+//	}
+	
+	void vacunarInscripto(Integer dni, Fecha fechaVacunacion) {	
+		vacunarInscripto2( dni,  fechaVacunacion);
+	}
+	
+	void vacunarInscripto2(Integer dni, Fecha fechaVacunacion) {	
+		for (Integer key : turno.keySet()) {
+			//NO ENTRA
+			if(turno.get(dni) == null) {
+				throw new RuntimeException("No está inscripto");
+			}	
+			else if(!turno.get(dni).getFecha().equals(fechaVacunacion)) {
 				throw new RuntimeException("La fecha de vacunación no corresponde con el día de hoy");
 			}
-			if(key == dni && turno.get(key).getFecha().equals(fechaVacunacion) ) {
-				vacunados.put(dni,turno.get(key).getVacunaAsignada());
-				heladeras.quitarVacuna(turno.get(key).getVacunaAsignada());
+			else  
+				{
+					vacunados.put(dni,turno.get(dni).getVacunaAsignada());
+					heladeras.quitarVacuna(turno.get(dni).getVacunaAsignada());
+				}
 			}
-			
-		}
+			}
+//			else if(!turno.get(dni).getFecha().equals(fechaVacunacion)) {
+//				throw new RuntimeException("La fecha de vacunación no corresponde con el día de hoy");
+//			}
+//			else if(compararKeys2(dni) == true && turno.get(dni).getFecha().equals(fechaVacunacion) ) 
+//			{
+//				vacunados.put(dni,turno.get(dni).getVacunaAsignada());
+//				heladeras.quitarVacuna(turno.get(dni).getVacunaAsignada());
+//			}
+//		}
+//	}
 		
-		//leer lista "turno"
-		//verificar que se haya presentado
-		//Si se presentï¿½,cambiar el boolean a vacunado
-		//Sino, lo sacamos del sistema y se devuelve la vacuna al stock
-	}
+//		
+//		//leer lista "turno"
+//		//verificar que se haya presentado
+//		//Si se presentï¿½,cambiar el boolean a vacunado
+//		//Sino, lo sacamos del sistema y se devuelve la vacuna al stock
+//	}
 	
 	
 	/**

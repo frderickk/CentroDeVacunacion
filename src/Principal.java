@@ -1,4 +1,4 @@
-
+import static org.junit.Assert.assertEquals;
 
 public class Principal {
 
@@ -27,12 +27,25 @@ public class Principal {
 //		System.out.println(centro.vacunasDisponibles("Sinopharm"));
 //		System.out.println(centro.vacunasDisponibles("Pfizer"));
 	
-		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
-		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true);
-		centro.inscribirPersona(24780201, new Fecha(1, 6, 1972), true, false);
-		centro.inscribirPersona(29223000, new Fecha(2, 5, 1982), false, true);
-		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false); //mayor
-		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, false); //mayor
+//		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
+//		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true);
+//		centro.inscribirPersona(24780201, new Fecha(1, 6, 1972), true, false);
+//		centro.inscribirPersona(29223000, new Fecha(2, 5, 1982), false, true);
+//		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false); //mayor
+//		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, false); //mayor
+		
+		
+		centro.inscribirPersona(34701000, new Fecha(1, 5, 1989), false, false);  // 32 NS NP 4
+		centro.inscribirPersona(29959000, new Fecha(20, 11, 1982), false, true); // 38 S  NP 1
+		centro.inscribirPersona(24780201, new Fecha(1, 6, 1972), true, false);   // 49 NS P  3
+		centro.inscribirPersona(29223000, new Fecha(2, 5, 1982), false, true);   // 39 S  NP 1
+		centro.inscribirPersona(13000000, new Fecha(1, 5, 1958), true, false);   // 63 NS P  2
+		centro.inscribirPersona(13000050, new Fecha(20, 6, 1958), false, true);  // 62 S  NP 1
+		centro.inscribirPersona(14000000, new Fecha(1, 1, 1961), false, false);  // 60 NS NP 2
+		centro.inscribirPersona(14005000, new Fecha(20, 12, 1961), true, false);
+		
+		System.out.println(centro.compararKeys(14000000));
+		
 //		centro.inscribirPersona(34701001, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
 //		centro.inscribirPersona(29959001, new Fecha(20, 11, 1982), false, true);
 //		centro.inscribirPersona(24780202, new Fecha(1, 6, 1972), true, false);
@@ -42,9 +55,13 @@ public class Principal {
 //		centro.inscribirPersona(13000052, new Fecha(20, 6, 1958), false, false); //mayor
 		
 		System.out.println(centro.vacunasDisponibles());
-		
+					
 		centro.generarTurnos(fTurnos);
-		System.out.println(centro.turnosConFecha(new Fecha(15, 7, 2021)).size());
+			
+		centro.vacunarInscripto(14000000, new Fecha(new Fecha(15, 7, 2021)));
+		
+		System.out.println(centro.compararKeys2(14000000));
+//		System.out.println(centro.turnosConFecha(new Fecha(15, 7, 2021)).size());
 		
 //		centro.generarTurnos(new Fecha(fTurnos));
 //		System.out.println(fTurnos);
@@ -53,16 +70,16 @@ public class Principal {
 //		
 //		
 		
-		Fecha.setFechaHoy(16,7,2021);
-		
-		System.out.println(centro);
-		System.out.println(centro.vacunasDisponibles());
-		
-		centro.inscribirPersona(34701001, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
-		centro.inscribirPersona(29959001, new Fecha(20, 11, 1982), false, true);
-		centro.inscribirPersona(24780202, new Fecha(1, 6, 1972), true, false);
-		centro.inscribirPersona(29223001, new Fecha(2, 5, 1982), false, true);
-		centro.generarTurnos(new Fecha(17,7,2021));
+//		Fecha.setFechaHoy(16,7,2021);
+//		
+//		System.out.println(centro);
+//		System.out.println(centro.vacunasDisponibles());
+//		
+//		centro.inscribirPersona(34701001, new Fecha(1, 5, 1989), false, false); // dni, fecha de nacimiento, salud y comorbilidad
+//		centro.inscribirPersona(29959001, new Fecha(20, 11, 1982), false, true);
+//		centro.inscribirPersona(24780202, new Fecha(1, 6, 1972), true, false);
+//		centro.inscribirPersona(29223001, new Fecha(2, 5, 1982), false, true);
+//		centro.generarTurnos(new Fecha(17,7,2021));
 //		centro.generarTurnos(new Fecha(fTurnos));
 //		centro.generarTurnos(fTurnos);
 		
