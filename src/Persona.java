@@ -3,7 +3,7 @@ public class Persona {
 	
 	private int dni;
 	private Fecha fechaDeNacimiento, fechaDeTurno;
-	private boolean trabajadorDeSalud, comorbilidades;
+	private boolean trabajadorDeSalud, comorbilidades, vacunado;
 	private String prioridad, vacunaAsignada;
 	
 	/**
@@ -48,6 +48,14 @@ public class Persona {
 
 	public void setFecha(Fecha fecha) {
 		this.fechaDeTurno = fecha;
+	}
+
+	public boolean isVacunado() {
+		return vacunado;
+	}
+
+	public void setVacunado(boolean vacunado) {
+		this.vacunado = vacunado;
 	}
 
 	public boolean getTrabajadorDeSalud() {

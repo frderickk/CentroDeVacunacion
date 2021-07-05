@@ -19,4 +19,9 @@ public class Sputnik extends Vacunas {
 	public String toString() {
 		return super.toString();
 	}
+
+	@Override
+	public boolean estaVencida() {
+		return false;
+	}
 }

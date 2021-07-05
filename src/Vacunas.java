@@ -1,17 +1,17 @@
 
 public abstract class Vacunas {
 
-	protected Fecha fechaDeEntrada;
+	protected Fecha fecha;
 	protected String nombre;
 	protected boolean vencida, reservada, aplicada;
 	
 	
 	/**
 	* Constructor de Vacunas
-	* Recibe como parametro la fecha de entrada
+	* Recibe como parametros la fecha de entrada
 	*/
-	public Vacunas(Fecha fechaDeEntrada) {
-		this.fechaDeEntrada = fechaDeEntrada;
+	public Vacunas(Fecha fechaDeFechaEntrada) {
+		this.fecha = fechaDeFechaEntrada;
 		this.vencida = false;
 		this.reservada = false;
 	}
@@ -20,11 +20,13 @@ public abstract class Vacunas {
 	/**
 	 * Getters y setters de vacunas
 	 */
+	public Fecha getFecha() {
+		return fecha;
+	}
+	
 	abstract public String getNombre();
 	
-	public Fecha getFecha() {
-		return fechaDeEntrada;
-	}
+	abstract public boolean estaVencida();
 	
 	public boolean isReservada() {
 		return reservada;
@@ -42,14 +44,6 @@ public abstract class Vacunas {
 		this.aplicada = aplicada;
 	}
 	
-	public boolean isVencida() {
-		return vencida;
-	}
-	
-	public void setVencida(boolean vencida) {
-		this.vencida = vencida;
-	}
-	
 	/**
 	 * hashCode y equals de vacunas
 	 */
@@ -58,7 +52,7 @@ public abstract class Vacunas {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (aplicada ? 1231 : 1237);
-		result = prime * result + ((fechaDeEntrada == null) ? 0 : fechaDeEntrada.hashCode());
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + (reservada ? 1231 : 1237);
 		result = prime * result + (vencida ? 1231 : 1237);
@@ -76,10 +70,10 @@ public abstract class Vacunas {
 		Vacunas other = (Vacunas) obj;
 		if (aplicada != other.aplicada)
 			return false;
-		if (fechaDeEntrada == null) {
-			if (other.fechaDeEntrada != null)
+		if (fecha == null) {
+			if (other.fecha != null)
 				return false;
-		} else if (!fechaDeEntrada.equals(other.fechaDeEntrada))
+		} else if (!fecha.equals(other.fecha))
 			return false;
 		if (nombre == null) {
 			if (other.nombre != null)

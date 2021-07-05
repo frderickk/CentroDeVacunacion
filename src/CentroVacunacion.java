@@ -85,6 +85,7 @@ public class CentroVacunacion {
 		 else {
 			 inscriptos.put(dni, new Persona(dni, fechaDeNacimiento, trabajadorDeSalud, comorbilidad));
 		 }
+		 definirPrioridad();
 	}
 
 	
@@ -118,12 +119,10 @@ public class CentroVacunacion {
 	public void generarTurnos(Fecha fechaInicial) {
 		removerPorfechaInvalida();
 		// Utilizamos metodos de la Heladera para controlar el stock
-		heladeras.verificarVacunaVencida();
 		heladeras.moverVacunasVencidas();
 		heladeras.quitarVacunaVencida();
-		definirPrioridadYAsignarVacuna();
 		// Si hay inscriptos con vacuna asignada
-		while(inscriptosConVacunaAsignada() > 0) {
+		while(inscriptos.size() > 0) {
 			asignarTurnos(fechaInicial);
 			moverConTurnoAsignado();
 		}
@@ -151,23 +150,19 @@ public class CentroVacunacion {
 	 * Segundo paso para generarTurno()
 	 * 		Definimos la prioridad y asignamos las vacunas que esten disponibles
 	 */
-	private void definirPrioridadYAsignarVacuna() {
+	private void definirPrioridad() {
 		for (int key : inscriptos.keySet()) {
 			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
 				inscriptos.get(key).setPrioridad("1");
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad())); 
 			}
-			else if(inscriptos.get(key).getComorbilidades() == true  ) {
+			else if(inscriptos.get(key).getComorbilidades() == true) {
 				inscriptos.get(key).setPrioridad("2");
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 			}
-			else if(inscriptos.get(key).edad() > 60  ) {
+			else if(inscriptos.get(key).edad() > 60 ) {
 				inscriptos.get(key).setPrioridad("3");
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 			}
 			else {
 				inscriptos.get(key).setPrioridad("4");
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 			}
 		}
 	}
@@ -178,15 +173,15 @@ public class CentroVacunacion {
 	 * 		Recorremos el diccionario de inscriptos y vemos la cantidad 
 	 * 		de inscriptos con vacuna asignada
 	 */
-	private int inscriptosConVacunaAsignada() {
-		int cant = 0;
-		for (int key : inscriptos.keySet()) {
-			if(!inscriptos.get(key).getVacunaAsignada().isEmpty()) {
-				cant++;
-			}
-		}
-		return cant;	
-	}
+//	private int inscriptosConVacunaAsignada() {
+//		int cant = 0;
+//		for (int key : inscriptos.keySet()) {
+//			if(!inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+//				cant++;
+//			}
+//		}
+//		return cant;	
+//	}
 	
 
 	
@@ -200,20 +195,24 @@ public class CentroVacunacion {
 		f = obtenerUltimaFecha(f);
 		chequearFecha(f);		
 		for (int key : inscriptos.keySet()) {
-			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1") {
 				inscriptos.get(key).setFecha(f);
+				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 				cap--;
 			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2" && !inscriptos.get(key).getVacunaAsignada().isEmpty() ) {
+			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2") {
 				inscriptos.get(key).setFecha(f);
+				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 				cap--;
 			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "3" && !inscriptos.get(key).getVacunaAsignada().isEmpty()) {
+			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "3") {
 				inscriptos.get(key).setFecha(f);
+				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 				cap--;
 			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4" && !inscriptos.get(key).getVacunaAsignada().isEmpty() ) {	
+			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4") {	
 				inscriptos.get(key).setFecha(f);
+				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
 				cap--;
 			}	
 		}

@@ -186,21 +186,6 @@ public class HeladeraVacunas {
 			}
 		}
 	}
-	
-	
-	/**
-	 * Verifica si la vacuna esta vencida (solo para Pfizer y Moderna)
-	 */
-	public void verificarVacunaVencida() {	
-		for (Integer num : vacunas.keySet()) {
-			if(vacunas.get(num).getNombre() == "Pfizer" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha() ) >= 1)) {
-				vacunas.get(num).setVencida(true);
-			}
-			else if(vacunas.get(num).getNombre() == "Moderna" && (Fecha.diferenciaMes(Fecha.hoy(), vacunas.get(num).getFecha()) >= 2)) {
-				vacunas.get(num).setVencida(true);
-			}
-		}
-	}
 		
 		
 	/**
@@ -210,7 +195,7 @@ public class HeladeraVacunas {
 		Iterator<Map.Entry<Integer,Vacunas>> iterator=vacunas.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<Integer,Vacunas> entry=iterator.next();
-			if(entry.getValue().isVencida()){
+			if(entry.getValue().estaVencida()){
 				iterator.remove();
 			}
 		}
@@ -223,13 +208,9 @@ public class HeladeraVacunas {
 	public void moverVacunasVencidas() {
 		Integer cont = 0;
 		for (Integer num : vacunas.keySet()) {
-			if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Pfizer") {
+			if(vacunas.get(num).estaVencida()) {
 				cont ++;
-				vacunasVencidas.put("Pfizer",cont);
-			}
-			else if(vacunas.get(num).isVencida() && vacunas.get(num).getNombre() == "Moderna") {
-				cont ++;
-				vacunasVencidas.put("Moderna",cont);
+				vacunasVencidas.put(vacunas.get(num).getNombre(),cont);
 			}
 		}
 	}
