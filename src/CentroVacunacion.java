@@ -27,7 +27,7 @@ public class CentroVacunacion {
 		vacunados = new HashMap<Integer, String>();
 		heladeras = new HeladeraVacunas();
 		turnos = new HashMap<Integer, Persona>();
-		if(capacidadDiaria < 0) {
+		if(capacidadDiaria <= 0) {
 			throw new RuntimeException("El centro no tiene capacidad");
 		}
 		if(nombreVacunatorio == null) {
@@ -72,7 +72,7 @@ public class CentroVacunacion {
 	* generar una excepción.
 	* Si la persona ya fue vacunada, también debe generar una excepción.
 	*/
-	public void inscribirPersona(int dni, Fecha fechaDeNacimiento, Boolean trabajadorDeSalud, Boolean comorbilidad) {
+	public void inscribirPersona(int dni, Fecha fechaDeNacimiento, Boolean comorbilidad, Boolean trabajadorDeSalud) {
 		if(inscriptos.containsKey(dni)) {
 			throw new RuntimeException("Esta persona ya ha sido inscripta");
 		}
@@ -83,7 +83,7 @@ public class CentroVacunacion {
 			 throw new RuntimeException("Esta persona ya ha sido vacunada");
 		 }
 		 else {
-			 inscriptos.put(dni, new Persona(dni, fechaDeNacimiento, trabajadorDeSalud, comorbilidad));
+			 inscriptos.put(dni, new Persona(dni, fechaDeNacimiento, comorbilidad, trabajadorDeSalud));
 		 }
 		 definirPrioridad();
 	}
@@ -166,23 +166,6 @@ public class CentroVacunacion {
 			}
 		}
 	}
-	
-	
-	/**
-	 * Tercer paso para generarTurno()
-	 * 		Recorremos el diccionario de inscriptos y vemos la cantidad 
-	 * 		de inscriptos con vacuna asignada
-	 */
-//	private int inscriptosConVacunaAsignada() {
-//		int cant = 0;
-//		for (int key : inscriptos.keySet()) {
-//			if(!inscriptos.get(key).getVacunaAsignada().isEmpty()) {
-//				cant++;
-//			}
-//		}
-//		return cant;	
-//	}
-	
 
 	
 	/**
@@ -192,7 +175,6 @@ public class CentroVacunacion {
 	private void asignarTurnos(Fecha fechaInicial) {
 		Fecha f = new Fecha(fechaInicial);
 		int cap = this.capacidad;
-		f = obtenerUltimaFecha(f);
 		chequearFecha(f);		
 		for (int key : inscriptos.keySet()) {
 			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1") {
@@ -239,35 +221,23 @@ public class CentroVacunacion {
 	 * Metodo que se utiliza en asignarTurno() para comparar la fecha
 	 * del parametro con la fecha de hoy.
 	 */
-	private Fecha chequearFecha(Fecha fecha) {
+	public Fecha chequearFecha(Fecha fecha) {
 		if(Fecha.hoy().posterior(fecha)) {
-			throw new RuntimeException("No es una fecha v�lida");
+			throw new RuntimeException("No es una fecha válida");
 		}
-		if(cantidadDeTurnosPorDia(fecha) == this.capacidad) 		
-			fecha.avanzarUnDia();	
-		return new Fecha(fecha);
-	}
-	
-	
-	/**
-	 * Metodo que se utiliza en asignarTurno() para obtener
-	 * la ultima fecha.
-	 */
-	private Fecha obtenerUltimaFecha(Fecha fecha) {
-		for (int key : turnos.keySet()) {
-			if(turnos.get(key).getFecha().posterior(fecha)) {
-				fecha = turnos.get(key).getFecha();
+		for (int i = 0; i < turnos.size(); i++) {
+			if(cantidadDeTurnosPorDia(fecha) == this.capacidad) {		
+				fecha.avanzarUnDia();
 			}
 		}
-		return fecha;
+		return new Fecha(fecha);
 	}
-	
 	
 	/**
 	 * Metodo que utiliza chequearFecha() donde recorre 
 	 * las fechas del diccionario de turnos.
 	 */
-	private int cantidadDeTurnosPorDia(Fecha fecha) {
+	public int cantidadDeTurnosPorDia(Fecha fecha) {
 		int turnosPorDia = 0;
 		for (Integer key : turnos.keySet()) {
 			if(turnos.get(key).getFecha().equals(fecha)) {
@@ -307,7 +277,7 @@ public class CentroVacunacion {
 			throw new RuntimeException("No est� inscripto");
 		}	
 		else if(!turnos.get(dni).getFecha().equals(fechaVacunacion)) {
-			throw new RuntimeException("La fecha de vacunaci�n no corresponde con el d�a de hoy");
+			throw new RuntimeException("La fecha de vacunación no corresponde con el día de hoy");
 		}
 		else  {
 			heladeras.aplicarVacuna(turnos.get(dni).getVacunaAsignada());
@@ -343,7 +313,7 @@ public class CentroVacunacion {
 		sb.append("                      ***********************************\n");
 		sb.append("                      -----------------------------------\n");
 		sb.append("                           Centro de vacunacion " + nombre + "" + "\n");
-		sb.append("                       Capacidad de vacunacion diaria: " + capacidad + "\n");
+		sb.append("                       Capacidad de vacunacion diaria: [" + capacidad + "]\n");
 		sb.append("                      -----------------------------------\n");
 		sb.append("                      ***********************************\n\n");
 		sb.append("\n                      --------------Turnos---------------\n\n");

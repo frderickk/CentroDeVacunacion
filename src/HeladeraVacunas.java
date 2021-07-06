@@ -228,8 +228,8 @@ public class HeladeraVacunas {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\n\n                      --------------Heladeras------------ \n\n");
-		sb.append("                             Vacunas Disponibles: "+ vacunasDisponibles() +"\n\n");
-		sb.append("                             Vacunas Vencidas: "+ vacunasVencidas.size() + "\n\n");
+		sb.append("                             Vacunas Disponibles: ["+ vacunasDisponibles() +"]\n\n");
+		sb.append("                             Vacunas Vencidas: "+ vacunasVencidas.values() + "\n\n");
 		return sb.toString();	
 	}
 }

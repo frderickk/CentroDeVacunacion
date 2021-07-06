@@ -9,8 +9,8 @@ public class Principal {
 		System.out.println(centro);
 		System.out.println();
 
-		centro.ingresarVacunas("Moderna", 3, new Fecha(15,5,2021));
-		centro.ingresarVacunas("Pfizer", 3, new Fecha(15,5,2021));
+		centro.ingresarVacunas("Moderna", 10, new Fecha(15,5,2021));
+		centro.ingresarVacunas("Pfizer", 10, new Fecha(15,5,2021));
 
 		centro.inscribirPersona(34701001, new Fecha(1, 5, 1989), false, false); 
 		centro.inscribirPersona(29959003, new Fecha(20, 11, 1982), false, true);
@@ -20,6 +20,7 @@ public class Principal {
 		centro.inscribirPersona(13000053, new Fecha(20, 6, 1958), false, true);
 		
 		centro.generarTurnos(fTurnos);
+		
 
 		System.out.println("                      -------------- Turnos -------------");
 		System.out.println("              " + centro.turnosConFecha(fTurnos));
