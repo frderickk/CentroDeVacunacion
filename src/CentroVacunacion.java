@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -9,9 +11,11 @@ public class CentroVacunacion {
 	private int capacidad;
 	private String nombre;	
 	private HashMap<Integer, Persona> inscriptos;
-	private HashMap<Integer, Persona> turnos;
+	private LinkedHashMap<Integer, Persona> turnos;
     private HashMap<Integer, String> vacunados;
+    private LinkedList<Persona> prioridad; 
     private HeladeraVacunas heladeras;
+
         
     
 	/**
@@ -23,10 +27,11 @@ public class CentroVacunacion {
 	public CentroVacunacion(String nombreVacunatorio, int capacidadDiaria) {
 		this.capacidad = capacidadDiaria;
 		this.nombre = nombreVacunatorio;
+		prioridad = new LinkedList<Persona>();
 		inscriptos = new HashMap<Integer, Persona>();
 		vacunados = new HashMap<Integer, String>();
 		heladeras = new HeladeraVacunas();
-		turnos = new HashMap<Integer, Persona>();
+		turnos = new LinkedHashMap<Integer, Persona>();
 		if(capacidadDiaria <= 0) {
 			throw new RuntimeException("El centro no tiene capacidad");
 		}
@@ -89,6 +94,9 @@ public class CentroVacunacion {
 	}
 
 	
+	public void devolverLinked() {
+		System.out.println(prioridad);
+	}
 	/**
 	* Devuelve una lista con los DNI de todos los inscriptos que no se vacunaron
 	* y que no tienen turno asignado.
@@ -121,11 +129,16 @@ public class CentroVacunacion {
 		// Utilizamos metodos de la Heladera para controlar el stock
 		heladeras.moverVacunasVencidas();
 		heladeras.quitarVacunaVencida();
+		inscriptosOrdenados();
+
 		// Si hay inscriptos con vacuna asignada
-		while(inscriptos.size() > 0) {
-			asignarTurnos(fechaInicial);
+		while(prioridad.size() > 0) {
+		asignarLinked(fechaInicial);
+
 			moverConTurnoAsignado();
+			
 		}
+
 	}
 	
 	
@@ -153,16 +166,18 @@ public class CentroVacunacion {
 	private void definirPrioridad() {
 		for (int key : inscriptos.keySet()) {
 			if(inscriptos.get(key).getTrabajadorDeSalud() == true) {
-				inscriptos.get(key).setPrioridad("1");
+				inscriptos.get(key).setPrioridad(1);
 			}
 			else if(inscriptos.get(key).getComorbilidades() == true) {
-				inscriptos.get(key).setPrioridad("2");
+				inscriptos.get(key).setPrioridad(3);
+
 			}
 			else if(inscriptos.get(key).edad() > 60 ) {
-				inscriptos.get(key).setPrioridad("3");
+				inscriptos.get(key).setPrioridad(2);
 			}
 			else {
-				inscriptos.get(key).setPrioridad("4");
+				inscriptos.get(key).setPrioridad(4);
+
 			}
 		}
 	}
@@ -172,49 +187,111 @@ public class CentroVacunacion {
 	 * Cuarto paso para generarTurno()
 	 * 		Asignamos el turno para cada inscripto chequeando las fechas.
 	 */
-	private void asignarTurnos(Fecha fechaInicial) {
-		Fecha f = new Fecha(fechaInicial);
-		int cap = this.capacidad;
-		chequearFecha(f);		
-		for (int key : inscriptos.keySet()) {
-			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1") {
-				inscriptos.get(key).setFecha(f);
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
-				cap--;
-			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2") {
-				inscriptos.get(key).setFecha(f);
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
-				cap--;
-			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "3") {
-				inscriptos.get(key).setFecha(f);
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
-				cap--;
-			}
-			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4") {	
-				inscriptos.get(key).setFecha(f);
-				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
-				cap--;
-			}	
-		}
-	}
 	
+		
+		
+		void inscriptosOrdenados() {
+//			prioridad = new LinkedList<Persona>();
+			for (Persona p : inscriptos.values()) {	
+				if(p.getPrioridad() == 1) {
+					prioridad.addFirst(p);
+				}
+				else if(p.getPrioridad() == 2) {
+					prioridad.add(p);
+				}
+				else if(p.getPrioridad() == 3) {
+					prioridad.add(p);
+				}
+				else if(p.getPrioridad() == 4) {
+					prioridad.add(p);
+				}
+			}
+			
+//			asignarLinked(fechaInicial);
+	
+		}
+		
+		private void asignarLinked(Fecha fechaInicial) {
+			Fecha f = new Fecha(fechaInicial);
+//			f = obtenerUltimaFecha(fechaInicial);
+			int cap = this.capacidad;
+			chequearFecha(f);		
+			for (int i = 0; i<prioridad.size(); i++) {
+				if(cap > 0) {
+					prioridad.get(i).setFecha(f);
+					prioridad.get(i).setVacunaAsignada(heladeras.asignarVacunaDisponibles(prioridad.get(i).edad()));
+					cap--;
+				}
+			}
+		}
+	
+//	private void asignarTurnos(Fecha fechaInicial) {
+//		Fecha f = new Fecha(fechaInicial);
+//		f = obtenerUltimaFecha(fechaInicial);
+//		int cap = this.capacidad;
+//		chequearFecha(f);		
+//		for (int key : inscriptos.keySet()) {
+//			if(cap > 0 && inscriptos.get(key).getPrioridad() == "1") {
+//				inscriptos.get(key).setFecha(f);
+//				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "2") {
+//				inscriptos.get(key).setFecha(f);
+//				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "3") {
+//				inscriptos.get(key).setFecha(f);
+//				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
+//				cap--;
+//			}
+//			else if(cap > 0 && inscriptos.get(key).getPrioridad() == "4") {	
+//				inscriptos.get(key).setFecha(f);
+//				inscriptos.get(key).setVacunaAsignada(heladeras.asignarVacunaDisponibles(inscriptos.get(key).edad()));
+//				cap--;
+//			}	
+//			
+//
+//		}
+//	}
+		
+
+	
+	Fecha obtenerUltimaFecha(Fecha fech) {
+		for (int key : turnos.keySet()) {
+			if(turnos.get(key).getFecha().posterior(fech)) {
+				fech = turnos.get(key).getFecha();
+			}
+		}
+		return fech;
+	}
 	
 	/**
 	 * Quinto paso para generarTurno()
 	 * 		Finalmente movemos a la persona de inscriptos al diccionario de turnos
 	 */
 	private void moverConTurnoAsignado() {
-		Iterator<Map.Entry<Integer,Persona>> iterator=inscriptos.entrySet().iterator();
+		Iterator<Persona> iterator=prioridad.iterator();
 		while (iterator.hasNext()){
-		Map.Entry<Integer,Persona> entry=iterator.next();
-		if(entry.getValue().getFecha() != null){
-			turnos.put(entry.getKey(), entry.getValue());
+		Persona entry=iterator.next();
+		if(entry.getFecha() != null){
+			turnos.put(entry.getDni(), entry);
 			iterator.remove();
 			}
 		}
+		
+		Iterator<Map.Entry<Integer,Persona>> iterator1=inscriptos.entrySet().iterator();
+		while (iterator1.hasNext()){
+			Map.Entry<Integer,Persona> entry=iterator1.next();
+			if(entry.getValue().getFecha() != null){
+				turnos.put(entry.getKey(), entry.getValue());
+				iterator1.remove();
+			}
+		}
 	}
+	
+
 		
 	
 	/**

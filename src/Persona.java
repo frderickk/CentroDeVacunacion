@@ -4,14 +4,15 @@ public class Persona {
 	private int dni;
 	private Fecha fechaDeNacimiento, fechaDeTurno;
 	private boolean trabajadorDeSalud, comorbilidades, vacunado;
-	private String prioridad, vacunaAsignada;
+	private String  vacunaAsignada;
+	private int prioridad;
 	
 	/**
 	* Constructor de persona
 	* Recibe como parametros el DNI, la fecha de nacimiento
 	* si es trabajador de salud y si tiene comorbilidades
 	*/
-	public Persona(int dni, Fecha fechaDeNacimiento, Boolean trabajadorDeSalud, Boolean comorbilidad) {
+	public Persona(int dni, Fecha fechaDeNacimiento, Boolean comorbilidad, Boolean trabajadorDeSalud) {
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.trabajadorDeSalud = trabajadorDeSalud;
 		this.comorbilidades = comorbilidad;
@@ -74,13 +75,17 @@ public class Persona {
 		this.comorbilidades = comorbilidades;
 	}
 
-	public String getPrioridad() {
+
+
+	public int getPrioridad() {
 		return prioridad;
 	}
 
-	public void setPrioridad(String prioridad) {
+
+	public void setPrioridad(int prioridad) {
 		this.prioridad = prioridad;
 	}
+
 
 	public String getVacunaAsignada() {
 		return vacunaAsignada;
@@ -118,6 +123,6 @@ public class Persona {
 
 	@Override
 	public String toString() {
-		return "Persona []";
+		return "Persona []" + prioridad + " " + fechaDeTurno + " " + vacunaAsignada + dni;
 	}
 }
