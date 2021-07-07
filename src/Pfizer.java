@@ -1,30 +1,25 @@
 public class Pfizer extends Vacunas {
 	
 	private Fecha fechaVencimiento;
-	private Fecha aux;
+	private Fecha fechaAux;
 
 	public Pfizer(Fecha fechaIngreso) {
 		super(fechaIngreso);
-		aux =new Fecha(fechaIngreso.dia() , fechaIngreso.mes() , fechaIngreso.anio());
+		fechaAux = new Fecha(fechaIngreso.dia() , fechaIngreso.mes() , fechaIngreso.anio());
 		for (int i = 0; i < 30; i++) {
-			aux.avanzarUnDia();
+			fechaAux.avanzarUnDia();
 		}
-		this.fechaVencimiento = aux;
+		this.fechaVencimiento = fechaAux;
 	}
 	
 	@Override
 	public String getNombre() {
 		return "Pfizer";
 	}
-
-	@Override
-	public Fecha getFecha() {
-		return super.getFecha();
-	}
 	
 	@Override
 	public boolean estaVencida() {
-		if(Fecha.hoy().compareTo(fechaVencimiento) >=0) {
+		if(Fecha.hoy().compareTo(fechaVencimiento) >= 0) {
 			return true;
 		}
 		else {

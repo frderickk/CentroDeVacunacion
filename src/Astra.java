@@ -11,11 +11,6 @@ public class Astra extends Vacunas {
 	}
 
 	@Override
-	public Fecha getFecha() {
-		return null;
-	}
-
-	@Override
 	public String toString() {
 		return super.toString();
 	}

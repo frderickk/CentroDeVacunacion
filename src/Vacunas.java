@@ -16,18 +16,14 @@ public abstract class Vacunas {
 		this.reservada = false;
 	}
 	
-	
-	/**
-	 * Getters y setters de vacunas
-	 */
-	public Fecha getFecha() {
-		return fecha;
-	}
-	
 	abstract public String getNombre();
 	
 	abstract public boolean estaVencida();
 	
+	
+	/**
+	 * Getters y setters de vacunas
+	 */
 	public boolean isReservada() {
 		return reservada;
 	}

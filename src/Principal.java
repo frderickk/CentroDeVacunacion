@@ -3,7 +3,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		Fecha fTurnos = new Fecha(15, 7, 2021);
-		CentroVacunacion centro = new CentroVacunacion("UNGS", 2 );
+		CentroVacunacion centro = new CentroVacunacion("UNGS", 5);
 
 		System.out.println("                      ------------ Creacion -------------");
 		System.out.println(centro);
@@ -19,24 +19,16 @@ public class Principal {
 		centro.inscribirPersona(13000004, new Fecha(1, 5, 1958), true, false);
 		centro.inscribirPersona(13000053, new Fecha(20, 6, 1958), false, true);
 
-		centro.devolverLinked();
-		centro.generarTurnos(fTurnos);
-		centro.devolverLinked();
-		
-//		centro.imprimirListas();
-		
+		centro.generarTurnos(fTurnos);		
 
 		System.out.println("                      -------------- Turnos -------------");
 		System.out.println("              " + centro.turnosConFecha(fTurnos));
 		System.out.println();
 		
-//		centro.vacunarInscripto(24780204, fTurnos);
-//		centro.vacunarInscripto(13000004, fTurnos);
+		centro.vacunarInscripto(24780204, fTurnos);
+		centro.vacunarInscripto(13000004, fTurnos);
 
 		System.out.println("                      ------------- Centro --------------");
 		System.out.println(centro);
-		
-
-
 	}
 }
